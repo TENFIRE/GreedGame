@@ -5,12 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class GUI extends JFrame implements GUI_Interface, ActionListener 
+public class GUI extends JFrame implements GUI_Interface 
 {
-	JPanel panel;
+
+	MyPanel panel;
 	
-	JButton roll, done, restart;
-		
 	GUI_Callback callback;
 
 	private GUIState guiState;
@@ -30,28 +29,12 @@ public class GUI extends JFrame implements GUI_Interface, ActionListener
 		setSize(600, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		panel = new JPanel();
+		panel = new PreGamePanel();
 		
-		roll = new JButton("Roll");
-		roll.addActionListener(this);
-		roll.setVisible(true);
-		
-		done = new JButton("Done");
-		done.addActionListener(this);
-		done.setVisible(true);
-		
-		restart = new JButton("Restart");
-		restart.addActionListener(this);
-		restart.setVisible(true);
-		
-		panel.add(roll);
-		panel.add(done);
-		panel.add(restart);
-
 		add(panel);
 	}
 
-
+/*
 	@Override
 	public void actionPerformed(ActionEvent arg0) 
 	{
@@ -65,12 +48,14 @@ public class GUI extends JFrame implements GUI_Interface, ActionListener
 		else if (arg0.getSource() == restart)
 			callback.Restart();
 	}
-
+*/
+	
 	@Override
 	public void SetCallback(GUI_Callback callback) 
 	{
 		// TODO Auto-generated method stub
 		this.callback = callback;
+		panel.SetCallback(callback);
 	}
 
 
@@ -83,7 +68,8 @@ public class GUI extends JFrame implements GUI_Interface, ActionListener
 		switch (guiState) 
 		{
 		case PreGame:
-			
+			panel = new PreGamePanel();
+			panel.SetCallback(callback);
 			break;
 
 		default:
