@@ -14,7 +14,7 @@ public class Die
 
 	public void Roll() 
 	{
-		value = random.nextInt(6);
+		value = 1 + random.nextInt(6);
 		System.out.println("Rolled: " + value);
 	}
 
