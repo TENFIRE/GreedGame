@@ -37,7 +37,7 @@ public class PostGamePanel extends MyPanel {
 	}
 	
 	@Override
-	public void Initialize() 
+	public void UpdateData() 
 	{
 		// TODO Auto-generated method stub
 		

@@ -35,22 +35,6 @@ public class GUI extends JFrame implements GUI_Interface
 		add(panel);
 	}
 
-/*
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
-	{
-		// TODO Auto-generated method stub
-		if (arg0.getSource() == roll)
-			callback.Roll();
-		
-		else if (arg0.getSource() == done)
-			callback.Done();
-		
-		else if (arg0.getSource() == restart)
-			callback.Restart();
-	}
-*/
-	
 	@Override
 	public void SetCallback(GUI_Callback callback) 
 	{
