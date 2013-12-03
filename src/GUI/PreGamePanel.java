@@ -38,20 +38,13 @@ public class PreGamePanel extends MyPanel
 		startButton.setVisible(true);
 		startButton.addActionListener(this);
 		
-		
 		model = new DefaultTableModel(0, columnNames.length);
 		model.setColumnIdentifiers(columnNames);
 		playerTable = new JTable(model);
 		
-	    //playerTable = new JTable(data, columnNames);
-	    
-	    
-	    //playerTable.setPreferredSize(new Dimension(500,300));
-	    
 	    scrollPane = new JScrollPane(playerTable);
 	    scrollPane.setPreferredSize(new Dimension(500,300));
 	    
-	   // playerTable.add
 	    setLayout(new FlowLayout());
 		add(scrollPane);
 		add(addButton);
@@ -67,23 +60,19 @@ public class PreGamePanel extends MyPanel
 		{
 			if (!name.equals(""))
 			{
-				int choice = JOptionPane.showOptionDialog(null, "What are " + name + "?", "Human or AI", JOptionPane.YES_NO_OPTION, 
-						JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Human","Coward AI", "Gambler AI"}, "Human");
+				String[] types = callback.GetTypes();
 				
-				switch (choice) 
+				if (types.length > 0)
 				{
-				case 0:
-					model.addRow(new String[]{name, "Human"});
-					break;
-				case 1:
-					model.addRow(new String[]{name, "Coward AI"});
-					break;
-				case 2:
-					model.addRow(new String[]{name, "Gambler AI"});
-					break;
-				default:
-					break;
-				}
+					int choice = JOptionPane.showOptionDialog(null, "What are " + name + "?", "Playertype", JOptionPane.YES_NO_OPTION, 
+							JOptionPane.INFORMATION_MESSAGE, null, types, types[0]);
+					
+					if (choice >= 0 && choice < types.length)
+					{
+						if (callback.AddPlayer(name, types[choice]))
+							model.addRow(new String[]{name, types[choice]});
+					}
+				}		
 			}
 		}
 	}
@@ -99,6 +88,7 @@ public class PreGamePanel extends MyPanel
 			
 			if (choice == 0)
 			{
+				callback.RemovePlayer(name, (String) model.getValueAt(index, 1));
 				model.removeRow(index);
 			}
 			
@@ -113,19 +103,16 @@ public class PreGamePanel extends MyPanel
 		if (e.getSource() == addButton)
 		{
 			AddPlayer();
-			
-			callback.Done();
 		}
 		
 		else if (e.getSource() == removeButton)
 		{
 			RemovePlayer();
-			callback.Restart();
 		}
 		
 		else if (e.getSource() == startButton)
 		{
-			callback.Roll();
+			callback.StartGame();
 		}
 	}
 

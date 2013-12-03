@@ -6,8 +6,13 @@ public interface GUI_Callback
 	public void Done();
 	public void Restart();
 	
+	public void StartGame();
+	
 	public int GetWinnerIndex();
 	public String[][] GetPlayerData();
 	
-	public void SetPlayerData(String[][] data);
+	public String[] GetTypes();
+	
+	public boolean AddPlayer(String name, String type);
+	public void RemovePlayer(String name, String type);
 }
