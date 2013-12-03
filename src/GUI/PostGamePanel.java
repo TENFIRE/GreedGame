@@ -48,6 +48,8 @@ public class PostGamePanel extends MyPanel {
 	{
 		if(e.getSource() == restartButton)
 		{
+			if (!CheckCallback())
+				return;
 			winnerLabel.setText(GetWinner());
 			callback.Restart();
 		}
@@ -55,7 +57,8 @@ public class PostGamePanel extends MyPanel {
 	
 	private String GetWinner()
 	{
-		
+		if (!CheckCallback())
+			return "";
 		int winner = callback.GetWinnerIndex();
 		
 		String[][] playerData = callback.GetPlayerData();
