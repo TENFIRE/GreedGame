@@ -6,7 +6,7 @@ public interface GUI_Interface
 {
 	public enum GUIState
 	{
-		PreGame, Roll, SelectScore, AI, PostGame
+		PreGame, RollDice, SelectScore, AI, PostGame
 	}
 	
 	public void Initialize();
