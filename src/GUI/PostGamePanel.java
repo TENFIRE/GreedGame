@@ -37,6 +37,13 @@ public class PostGamePanel extends MyPanel {
 	}
 	
 	@Override
+	public void Initialize() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if(e.getSource() == restartButton)

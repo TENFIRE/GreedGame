@@ -52,6 +52,13 @@ public class PreGamePanel extends MyPanel
 		add(startButton);
 	}
 	
+	@Override
+	public void Initialize() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	
 	private void AddPlayer()
 	{
 		String name = JOptionPane.showInputDialog("What's your name?");
@@ -122,5 +129,4 @@ public class PreGamePanel extends MyPanel
 		// TODO Auto-generated method stub
 		this.callback = callback;
 	}
-
 }
