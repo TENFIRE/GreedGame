@@ -13,8 +13,6 @@ public class GUI extends JFrame implements GUI_Interface
 
 	private GUIState guiState;
 	
-	private ArrayList<Integer> pickableDice;
-	
 	//private PreGamePanel preGamePanel;
 
 	public GUI() 
@@ -33,6 +31,7 @@ public class GUI extends JFrame implements GUI_Interface
 		panel = new PreGamePanel();
 		
 		add(panel);
+		paintComponents(getGraphics());
 	}
 
 	@Override
@@ -50,25 +49,22 @@ public class GUI extends JFrame implements GUI_Interface
 	{
 		// TODO Auto-generated method stub
 		guiState = state;
-		
+		remove(panel);
 		switch (guiState) 
 		{
 		case PreGame:
 			panel = new PreGamePanel();
 			break;
-
+		case PostGame:
+			panel = new PostGamePanel();
+			break;
 		default:
 			break;
 		}
+		add(panel);
 		panel.SetCallback(callback);
 		panel.UpdateData();
-	}
-
-	@Override
-	public void SetPickableDice(ArrayList<Integer> pickableDice) 
-	{
-		// TODO Auto-generated method stub
-		this.pickableDice = pickableDice;
+		paintComponents(getGraphics());
 	}
 
 	@Override
@@ -76,6 +72,13 @@ public class GUI extends JFrame implements GUI_Interface
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void SetDiceValues(ArrayList<Integer> diceValues) 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }
