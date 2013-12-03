@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +20,8 @@ public class RollDicePanel extends MyPanel
 	private JButton rollButton;
 	private JButton restartButton;
 	
+	private JCheckBox diceboxes[];
+	
 	public RollDicePanel()
 	{
 		rollButton = new JButton("Roll");
@@ -29,9 +32,21 @@ public class RollDicePanel extends MyPanel
 		restartButton.setVisible(true);
 		restartButton.addActionListener(this);
 		
+		diceboxes = new JCheckBox[6];
+		
+		
+		
 		setLayout(new FlowLayout());
 		add(rollButton);
 		add(restartButton);
+		
+		for (int i = 0; i < 6; i++)
+		{
+			diceboxes[i] = new JCheckBox();
+			diceboxes[i].setVisible(true);
+			diceboxes[i].addActionListener(this);
+			add(diceboxes[i]);
+		}
 	}
 	
 	
@@ -52,6 +67,17 @@ public class RollDicePanel extends MyPanel
 				return;
 			callback.Roll();
 		}
+		
+		for (int i = 0; i < 6; i++)
+		{
+			if (e.getSource() == diceboxes[i])
+			{
+				if (diceboxes[i].isSelected())
+					callback.SelectDie(i);
+				else
+					callback.UnselectDie(i);
+			}
+		}
 	}
 	
 	private void UpdateDice()
@@ -59,6 +85,22 @@ public class RollDicePanel extends MyPanel
 		if (!CheckCallback())
 			return;
 		dice = callback.GetDice();
+		
+		for (int i = 0; i < 6; i++)
+		{
+			if (callback.IsDieLocked(i))
+			{
+				diceboxes[i].setEnabled(false);
+				diceboxes[i].setSelected(false);
+			}
+			else
+			{
+				diceboxes[i].setEnabled(true);
+				diceboxes[i].setSelected(callback.IsDieSelected(i));
+			}
+			
+		}
+		
 	}
 
 	@Override

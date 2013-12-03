@@ -41,7 +41,6 @@ public class GreedGame implements GUI_Callback
 		if (gameState.CanRoll())
 		{
 			//only roll selected dice
-			dManager.SelectAll();
 			dManager.RollSelected();
 			gameState = gameState.ChangeState(new PostGameState());
 			gui.SetGUIState(GUIState.PostGame);
@@ -117,9 +116,15 @@ public class GreedGame implements GUI_Callback
 	}
 
 	@Override
-	public boolean IsDicePickable(int index) {
+	public boolean IsDieSelected(int index) {
 		// TODO Auto-generated method stub
-		return false;
+		return dManager.isDieSelected(index);
+	}
+	
+	@Override
+	public boolean IsDieLocked(int index) {
+		// TODO Auto-generated method stub
+		return dManager.isDieLocked(index);
 	}
 
 	@Override
@@ -136,5 +141,20 @@ public class GreedGame implements GUI_Callback
 		
 		return diceValues;
 	}
+
+	@Override
+	public void SelectDie(int index) 
+	{
+		// TODO Auto-generated method stub
+		dManager.SelectDie(index);
+	}
+
+	@Override
+	public void UnselectDie(int index) 
+	{
+		// TODO Auto-generated method stub
+		dManager.UnselectDie(index);
+	}
+
 
 }

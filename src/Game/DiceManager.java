@@ -41,7 +41,10 @@ public class DiceManager
 		for (int i = 0; i < NUMDICE; i++)
 		{
 			if (selectedDice.contains(i))
+			{
+				System.out.println("Rolled: " + i);
 				dice[i].Roll();
+			}
 		}
 	}
 	
@@ -54,7 +57,29 @@ public class DiceManager
 	public void SelectDie(int index)
 	{
 		if (!selectedDice.contains(index) && !lockedDice.contains(index))
+		{
+			System.out.println("Selected: " + index);
 			selectedDice.add(index);
+		}
+	}
+	
+	public void UnselectDie(int index)
+	{
+		if (selectedDice.contains(index))
+		{
+			System.out.println("Unselected: " + index);
+			selectedDice.remove((Object)index);
+		}
+	}
+	
+	public boolean isDieSelected(int index)
+	{
+		return selectedDice.contains(index);
+	}
+	
+	public boolean isDieLocked(int index)
+	{
+		return lockedDice.contains(index);
 	}
 	
 	public void SelectAll()

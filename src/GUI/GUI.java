@@ -69,19 +69,4 @@ public class GUI extends JFrame implements GUI_Interface
 		panel.UpdateData();
 		paintComponents(getGraphics());
 	}
-
-	@Override
-	public ArrayList<Integer> GetSelectedDice() 
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void SetDiceValues(ArrayList<Integer> diceValues) 
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 }

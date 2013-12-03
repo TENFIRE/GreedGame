@@ -11,8 +11,12 @@ public interface GUI_Callback
 	public int GetWinnerIndex();
 	public String[][] GetPlayerData();
 	
-	public boolean IsDicePickable(int index);
+	public boolean IsDieSelected(int index);
+	public boolean IsDieLocked(int index);
 	public int[] GetDice();
+	
+	public void SelectDie(int index);
+	public void UnselectDie(int index);
 	
 	public String[] GetTypes();
 	

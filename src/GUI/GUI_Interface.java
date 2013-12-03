@@ -15,8 +15,4 @@ public interface GUI_Interface
 
 	public void SetGUIState(GUIState state);
 	
-	public void SetDiceValues(ArrayList<Integer> diceValues);
-	
-	public ArrayList<Integer> GetSelectedDice();
-	
 }
