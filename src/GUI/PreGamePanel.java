@@ -59,7 +59,7 @@ public class PreGamePanel extends MyPanel
 		add(startButton);
 	}
 	
-	private void addPlayer()
+	private void AddPlayer()
 	{
 		String name = JOptionPane.showInputDialog("What's your name?");
 		
@@ -87,6 +87,23 @@ public class PreGamePanel extends MyPanel
 			}
 		}
 	}
+	
+	private void RemovePlayer()
+	{
+		int index = playerTable.getSelectedRow();
+		if (index != -1)
+		{
+			String name = (String) model.getValueAt(index, 0);
+			
+			int choice = JOptionPane.showConfirmDialog(null, "Do you want to remove " + name + "?");
+			
+			if (choice == 0)
+			{
+				model.removeRow(index);
+			}
+			
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
@@ -95,13 +112,14 @@ public class PreGamePanel extends MyPanel
 		
 		if (e.getSource() == addButton)
 		{
-			addPlayer();
+			AddPlayer();
 			
 			callback.Done();
 		}
 		
 		else if (e.getSource() == removeButton)
 		{
+			RemovePlayer();
 			callback.Restart();
 		}
 		

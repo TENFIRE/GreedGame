@@ -75,4 +75,25 @@ public class GreedGame implements GUI_Callback
 		gameState = new PreGameState();
 	}
 
+	@Override
+	public int GetWinnerIndex() 
+	{
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String[][] GetPlayerData() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void SetPlayerData(String[][] data) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }
