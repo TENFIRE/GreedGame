@@ -64,11 +64,9 @@ public class PreGamePanel extends MyPanel
 	@Override
 	public void UpdateData() 
 	{	
-		if (callback == null)
-		{
-			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+		if (!CheckCallback())
 			return;
-		}
+		
 		String[][] data = callback.GetPlayerData();	
 		
 		if (data != null)
@@ -87,11 +85,9 @@ public class PreGamePanel extends MyPanel
 	
 	private void AddPlayer()
 	{
-		if (callback == null)
-		{
-			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+		if (!CheckCallback())
 			return;
-		}
+		
 		String name = JOptionPane.showInputDialog("What's your name?");
 		
 		if (name != null)
@@ -117,11 +113,8 @@ public class PreGamePanel extends MyPanel
 	
 	private void RemovePlayer()
 	{
-		if (callback == null)
-		{
-			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+		if (!CheckCallback())
 			return;
-		}
 		
 		int index = playerTable.getSelectedRow();
 		if (index != -1)
