@@ -2,6 +2,7 @@ package Game;
 import GUI.GUI;
 import GUI.GUI_Callback;
 import GUI.GUI_Interface;
+import GUI.GUI_Interface.GUIState;
 import GameState.*;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class GreedGame implements GUI_Callback
 	
 	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI"};
 	
-	protected ArrayList<Die> dice;
+	protected Die[] dice;
 	
 	public GreedGame()
 	{
@@ -32,12 +33,8 @@ public class GreedGame implements GUI_Callback
 		
 		gameState = new PreGameState();
 		
-		dice = new ArrayList<Die>();
-		
-		for (int i = 0; i < NUMDICE; i++)
-		{
-			dice.add(new Die());
-		}
+		dice = new Die[NUMDICE];
+
 	}
 
 	@Override
@@ -46,9 +43,9 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanRoll())
 		{
-			for (int i = 0; i < dice.size(); i++)
+			for (int i = 0; i < dice.length; i++)
 			{
-				dice.get(i).Roll();
+				dice[i].Roll();
 			}
 		}
 	}
@@ -75,6 +72,7 @@ public class GreedGame implements GUI_Callback
 			
 		}
 		gameState = new PreGameState();
+		gui.SetGUIState(GUIState.PreGame);
 	}
 
 	@Override
@@ -109,6 +107,7 @@ public class GreedGame implements GUI_Callback
 	public boolean AddPlayer(String name, String type) 
 	{
 		// TODO Auto-generated method stub
+		gui.SetGUIState(GUIState.PostGame);
 		return true;
 	}
 
@@ -117,6 +116,27 @@ public class GreedGame implements GUI_Callback
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean IsDicePickable(int index) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int[] GetDice() 
+	{
+		// TODO Auto-generated method stub
+		
+		int diceValues[] = new int[dice.length];
+		
+		for (int i = 0; i < dice.length; i++)
+		{
+			diceValues[i] = dice[i].GetValue();
+		}
+		
+		return diceValues;
 	}
 
 }
