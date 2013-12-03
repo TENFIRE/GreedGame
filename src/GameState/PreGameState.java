@@ -11,14 +11,7 @@ public class PreGameState implements GameState_Interface
 	public GameState_Interface ChangeState(GameState_Interface newState) 
 	{
 		// TODO Auto-generated method stub
-		return new SelectScoreState();
-	}
-
-	@Override
-	public void SetGUI(GUI_Interface gui) 
-	{
-		// TODO Auto-generated method stub
-		gui.SetGUIState(GUIState.PreGame);
+		return newState;
 	}
 
 	@Override
@@ -37,6 +30,12 @@ public class PreGameState implements GameState_Interface
 	public boolean CanRestart() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean CanStartGame() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 

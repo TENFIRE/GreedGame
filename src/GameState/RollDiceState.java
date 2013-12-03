@@ -1,10 +1,8 @@
 package GameState;
 
 import GUI.GUI_Interface;
-import GUI.GUI_Interface.GUIState;
-import Game.GreedGame;
 
-public class SelectScoreState implements GameState_Interface
+public class RollDiceState implements GameState_Interface
 {
 
 	@Override
@@ -17,19 +15,19 @@ public class SelectScoreState implements GameState_Interface
 	@Override
 	public boolean CanRoll() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean CanDone() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean CanRestart() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -37,6 +35,5 @@ public class SelectScoreState implements GameState_Interface
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }

@@ -8,13 +8,13 @@ public interface GameState_Interface
 {
 	public GameState_Interface ChangeState(GameState_Interface newState);
 	
-	public void SetGUI(GUI_Interface gui);
-	
 	public boolean CanRoll();
 	
 	public boolean CanDone();
 	
 	public boolean CanRestart();
+	
+	public boolean CanStartGame();
 	
 	//Pre Game -> waiting for move
 	//GUI callback to GreedGame.AddPlayer
