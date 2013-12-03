@@ -48,16 +48,9 @@ public class PostGamePanel extends MyPanel {
 	{
 		if(e.getSource() == restartButton)
 		{
-			
 			winnerLabel.setText(GetWinner());
 			callback.Restart();
 		}
-	}
-
-	@Override
-	public void SetCallback(GUI_Callback callback) {
-		// TODO Auto-generated method stub
-		this.callback = callback;
 	}
 	
 	private String GetWinner()
