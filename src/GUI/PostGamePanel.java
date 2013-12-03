@@ -29,7 +29,7 @@ public class PostGamePanel extends MyPanel {
 		
 		winnerLabel = new JLabel();
 		winnerLabel.setVisible(true);
-		winnerLabel.setText("Everyone is a winner... not!");
+		winnerLabel.setText("");
 		
 		setLayout(new FlowLayout());
 		add(restartButton);
@@ -48,6 +48,8 @@ public class PostGamePanel extends MyPanel {
 	{
 		if(e.getSource() == restartButton)
 		{
+			
+			winnerLabel.setText(GetWinner());
 			callback.Restart();
 		}
 	}
@@ -56,6 +58,28 @@ public class PostGamePanel extends MyPanel {
 	public void SetCallback(GUI_Callback callback) {
 		// TODO Auto-generated method stub
 		this.callback = callback;
+	}
+	
+	private String GetWinner()
+	{
+		
+		int winner = callback.GetWinnerIndex();
+		
+		String[][] playerData = callback.GetPlayerData();
+		
+		if(playerData != null)
+		{
+			String name, points, type;
+			name = playerData[winner][0];
+			points = playerData[winner][2];
+			type = playerData[winner][1];
+			
+			return name + " won with " + points + "points (As a " + type + ")";
+		}		
+		
+		
+		return "Winner nr: " + winner;
+		
 	}
 
 }
