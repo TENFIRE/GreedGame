@@ -41,6 +41,7 @@ public class GUI extends JFrame implements GUI_Interface
 		// TODO Auto-generated method stub
 		this.callback = callback;
 		panel.SetCallback(callback);
+		panel.UpdateData();
 	}
 
 
@@ -54,13 +55,13 @@ public class GUI extends JFrame implements GUI_Interface
 		{
 		case PreGame:
 			panel = new PreGamePanel();
-			panel.SetCallback(callback);
 			break;
 
 		default:
 			break;
 		}
-		
+		panel.SetCallback(callback);
+		panel.UpdateData();
 	}
 
 	@Override
