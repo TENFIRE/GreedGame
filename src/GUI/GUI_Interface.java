@@ -6,7 +6,7 @@ public interface GUI_Interface
 {
 	public enum GUIState
 	{
-		PreGame, SelectRoll, SelectScore, AI, Post
+		PreGame, Roll, SelectScore, AI, PostGame
 	}
 	
 	public void Initialize();
@@ -15,7 +15,7 @@ public interface GUI_Interface
 
 	public void SetGUIState(GUIState state);
 	
-	public void SetPickableDice(ArrayList<Integer> pickableDice);
+	public void SetDiceValues(ArrayList<Integer> diceValues);
 	
 	public ArrayList<Integer> GetSelectedDice();
 	
