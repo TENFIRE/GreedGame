@@ -11,6 +11,9 @@ public interface GUI_Callback
 	public int GetWinnerIndex();
 	public String[][] GetPlayerData();
 	
+	public boolean IsDicePickable(int index);
+	public int[] GetDice();
+	
 	public String[] GetTypes();
 	
 	public boolean AddPlayer(String name, String type);
