@@ -15,6 +15,8 @@ public class GreedGame implements GUI_Callback
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 	
+	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI"};
+	
 	protected ArrayList<Die> dice;
 	
 	public GreedGame()
@@ -90,7 +92,28 @@ public class GreedGame implements GUI_Callback
 	}
 
 	@Override
-	public void SetPlayerData(String[][] data) 
+	public void StartGame() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String[] GetTypes() 
+	{
+		// TODO Auto-generated method stub
+		return playerTypes;
+	}
+
+	@Override
+	public boolean AddPlayer(String name, String type) 
+	{
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public void RemovePlayer(String name, String type) 
 	{
 		// TODO Auto-generated method stub
 		
