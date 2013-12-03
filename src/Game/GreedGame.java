@@ -10,15 +10,12 @@ import java.util.ArrayList;
 public class GreedGame implements GUI_Callback
 {
 
-	private static final int NUMDICE = 6;
-	
-	
+	DiceManager dManager;
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 	
 	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI"};
 	
-	protected Die[] dice;
 	
 	public GreedGame()
 	{
@@ -33,7 +30,7 @@ public class GreedGame implements GUI_Callback
 		
 		gameState = new PreGameState();
 		
-		dice = new Die[NUMDICE];
+		dManager = new DiceManager();
 
 	}
 
@@ -43,10 +40,11 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanRoll())
 		{
-			for (int i = 0; i < dice.length; i++)
-			{
-				dice[i].Roll();
-			}
+			//only roll selected dice
+			dManager.SelectAll();
+			dManager.RollSelected();
+			gameState = gameState.ChangeState(new PostGameState());
+			gui.SetGUIState(GUIState.PostGame);
 		}
 	}
 
@@ -57,10 +55,8 @@ public class GreedGame implements GUI_Callback
 		
 		if (gameState.CanDone())
 		{
-			
+			gameState = gameState.ChangeState(new SelectScoreState());
 		}
-		
-		gameState = new SelectScoreState();
 	}
 
 	@Override
@@ -69,10 +65,9 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanRestart())
 		{
-			
+			gameState = gameState.ChangeState(new PreGameState());
+			gui.SetGUIState(GUIState.PreGame);			
 		}
-		gameState = new PreGameState();
-		gui.SetGUIState(GUIState.PreGame);
 	}
 
 	@Override
@@ -93,7 +88,11 @@ public class GreedGame implements GUI_Callback
 	public void StartGame() 
 	{
 		// TODO Auto-generated method stub
-		gui.SetGUIState(GUIState.PostGame);		
+		if (gameState.CanStartGame())
+		{
+			gameState = gameState.ChangeState(new RollDiceState());
+			gui.SetGUIState(GUIState.RollDice);		
+		}
 	}
 
 	@Override
@@ -128,11 +127,11 @@ public class GreedGame implements GUI_Callback
 	{
 		// TODO Auto-generated method stub
 		
-		int diceValues[] = new int[dice.length];
+		int diceValues[] = new int[DiceManager.NUMDICE];
 		
-		for (int i = 0; i < dice.length; i++)
+		for (int i = 0; i < DiceManager.NUMDICE; i++)
 		{
-			diceValues[i] = dice[i].GetValue();
+			diceValues[i] = dManager.GetValue(i);
 		}
 		
 		return diceValues;
