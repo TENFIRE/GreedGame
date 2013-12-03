@@ -93,7 +93,7 @@ public class GreedGame implements GUI_Callback
 	public void StartGame() 
 	{
 		// TODO Auto-generated method stub
-		
+		gui.SetGUIState(GUIState.PostGame);		
 	}
 
 	@Override
@@ -107,7 +107,6 @@ public class GreedGame implements GUI_Callback
 	public boolean AddPlayer(String name, String type) 
 	{
 		// TODO Auto-generated method stub
-		gui.SetGUIState(GUIState.PostGame);
 		return true;
 	}
 
