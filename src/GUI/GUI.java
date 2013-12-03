@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame implements GUI_Interface 
 {
-
 	MyPanel panel;
 	
 	GUI_Callback callback;
@@ -15,6 +14,8 @@ public class GUI extends JFrame implements GUI_Interface
 	private GUIState guiState;
 	
 	private ArrayList<Integer> pickableDice;
+	
+	//private PreGamePanel preGamePanel;
 
 	public GUI() 
 	{

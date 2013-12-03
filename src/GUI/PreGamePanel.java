@@ -1,14 +1,28 @@
 package GUI;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 public class PreGamePanel extends MyPanel
 {
-	JTable playerTable;
-	JButton addButton, removeButton, startButton;
+	private JScrollPane scrollPane;
+	private JTable playerTable;
+	private JButton addButton, removeButton, startButton;
+	
+	String[] columnNames = { "Name", "Type" };
+	DefaultTableModel model;
 	
 	public PreGamePanel()
 	{
@@ -25,12 +39,53 @@ public class PreGamePanel extends MyPanel
 		startButton.addActionListener(this);
 		
 		
+		model = new DefaultTableModel(0, columnNames.length);
+		model.setColumnIdentifiers(columnNames);
+		playerTable = new JTable(model);
 		
+	    //playerTable = new JTable(data, columnNames);
+	    
+	    
+	    //playerTable.setPreferredSize(new Dimension(500,300));
+	    
+	    scrollPane = new JScrollPane(playerTable);
+	    scrollPane.setPreferredSize(new Dimension(500,300));
+	    
+	   // playerTable.add
+	    setLayout(new FlowLayout());
+		add(scrollPane);
 		add(addButton);
 		add(removeButton);
 		add(startButton);
+	}
+	
+	private void addPlayer()
+	{
+		String name = JOptionPane.showInputDialog("What's your name?");
 		
-		playerTable = new JTable();
+		if (name != null)
+		{
+			if (!name.equals(""))
+			{
+				int choice = JOptionPane.showOptionDialog(null, "What are " + name + "?", "Human or AI", JOptionPane.YES_NO_OPTION, 
+						JOptionPane.INFORMATION_MESSAGE, null, new String[]{"Human","Coward AI", "Gambler AI"}, "Human");
+				
+				switch (choice) 
+				{
+				case 0:
+					model.addRow(new String[]{name, "Human"});
+					break;
+				case 1:
+					model.addRow(new String[]{name, "Coward AI"});
+					break;
+				case 2:
+					model.addRow(new String[]{name, "Gambler AI"});
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 
 	@Override
@@ -40,6 +95,8 @@ public class PreGamePanel extends MyPanel
 		
 		if (e.getSource() == addButton)
 		{
+			addPlayer();
+			
 			callback.Done();
 		}
 		
@@ -52,8 +109,6 @@ public class PreGamePanel extends MyPanel
 		{
 			callback.Roll();
 		}
-		
-		
 	}
 
 	@Override
@@ -62,6 +117,5 @@ public class PreGamePanel extends MyPanel
 		// TODO Auto-generated method stub
 		this.callback = callback;
 	}
-
 
 }
