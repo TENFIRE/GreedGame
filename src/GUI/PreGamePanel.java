@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -40,7 +41,15 @@ public class PreGamePanel extends MyPanel
 		
 		model = new DefaultTableModel(0, columnNames.length);
 		model.setColumnIdentifiers(columnNames);
-		playerTable = new JTable(model);
+		
+		playerTable = new JTable(model)
+		{
+			public boolean isCellEditable(int row, int column) { return false; }
+		};
+		
+		playerTable.getTableHeader().setReorderingAllowed(false);
+		playerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
 		
 	    scrollPane = new JScrollPane(playerTable);
 	    scrollPane.setPreferredSize(new Dimension(500,300));
@@ -54,13 +63,35 @@ public class PreGamePanel extends MyPanel
 	
 	@Override
 	public void UpdateData() 
-	{
-		// TODO Auto-generated method stub
+	{	
+		if (callback == null)
+		{
+			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+			return;
+		}
+		String[][] data = callback.GetPlayerData();	
 		
+		if (data != null)
+		{
+			for (int i = model.getRowCount() - 1; i > -1; i--)
+			{
+				model.removeRow(i);
+			}
+
+			for (int i = 0; i < data.length; i++)
+			{
+				model.addRow(new String[]{data[i][0], data[i][1]});
+			}
+		}
 	}
 	
 	private void AddPlayer()
 	{
+		if (callback == null)
+		{
+			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+			return;
+		}
 		String name = JOptionPane.showInputDialog("What's your name?");
 		
 		if (name != null)
@@ -86,6 +117,12 @@ public class PreGamePanel extends MyPanel
 	
 	private void RemovePlayer()
 	{
+		if (callback == null)
+		{
+			JOptionPane.showMessageDialog(null, "Can't contact game engine.");
+			return;
+		}
+		
 		int index = playerTable.getSelectedRow();
 		if (index != -1)
 		{
@@ -123,10 +160,4 @@ public class PreGamePanel extends MyPanel
 		}
 	}
 
-	@Override
-	public void SetCallback(GUI_Callback callback) 
-	{
-		// TODO Auto-generated method stub
-		this.callback = callback;
-	}
 }
