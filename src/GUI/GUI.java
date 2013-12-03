@@ -55,6 +55,9 @@ public class GUI extends JFrame implements GUI_Interface
 		case PreGame:
 			panel = new PreGamePanel();
 			break;
+		case RollDice:
+			panel = new RollDicePanel();
+			break;
 		case PostGame:
 			panel = new PostGamePanel();
 			break;
