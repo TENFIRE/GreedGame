@@ -78,12 +78,15 @@ public class PostGamePanel extends MyPanel {
 		
 		if(playerData != null)
 		{
-			String name, points, type;
-			name = playerData[winner][0];
-			points = playerData[winner][2];
-			type = playerData[winner][1];
+			if (playerData.length > winner)
+			{
+				String name, points, type;
+				name = playerData[winner][0];
+				points = playerData[winner][2];
+				type = playerData[winner][1];
 			
-			return name + " won with " + points + "points (As a " + type + ")";
+				return name + " won with " + points + "points (As a " + type + ")";
+			}
 		}		
 		
 		
