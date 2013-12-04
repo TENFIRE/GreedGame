@@ -66,8 +66,11 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanDone())
 		{
-			sManager.AddScore(dManager.GetSelectedValues());
-			pManager.AddScore(activePlayer, sManager.GetScore());
+			if (CanContinue()) //only add points if not busted
+			{
+				sManager.AddScore(dManager.GetSelectedValues());
+				pManager.AddScore(activePlayer, sManager.GetScore());
+			}
 			
 			if (IsGameOver())
 				gameState.ChangeState(this, new PostGameState());
@@ -76,7 +79,7 @@ public class GreedGame implements GUI_Callback
 				//change player
 				activePlayer = pManager.GetNextPlayerIndex(activePlayer);
 				if (pManager.IsAI(activePlayer))
-					gameState = new AIActiveState();
+					gameState.ChangeState(this, new AIActiveState());
 				else
 					gameState.ChangeState(this, new SelectScoreState());
 				
@@ -106,6 +109,7 @@ public class GreedGame implements GUI_Callback
 	{
 		dManager.Reset();
 		dManager.LockAndRoll();
+		gui.UpdateData();
 	}
 	
 	@Override

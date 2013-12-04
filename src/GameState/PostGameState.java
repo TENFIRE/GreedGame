@@ -10,7 +10,8 @@ public class PostGameState implements GameState_Interface
 	public void ChangeState(GreedGame game, GameState_Interface state) 
 	{
 		// TODO Auto-generated method stub
-		game.SetState(state);
+		if (state.getClass() != this.getClass())
+			game.SetState(state);
 	}
 
 	@Override

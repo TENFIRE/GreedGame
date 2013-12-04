@@ -9,7 +9,8 @@ public class AIActiveState implements GameState_Interface
 	@Override
 	public void ChangeState(GreedGame game, GameState_Interface state) {
 		// TODO Auto-generated method stub
-		
+		if (state.getClass() != this.getClass())
+			game.SetState(state);
 	}
 
 	@Override
