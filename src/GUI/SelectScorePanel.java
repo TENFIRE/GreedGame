@@ -12,6 +12,7 @@ public class SelectScorePanel extends MyPanel
 
 	private JButton doneButton;
 	private JButton continueButton;
+	private JButton restartButton;
 	
 	private JCheckBox diceboxes[];
 	private JLabel dicevalues[];
@@ -25,6 +26,10 @@ public class SelectScorePanel extends MyPanel
 		continueButton = new JButton("Continue");
 		continueButton.setVisible(true);
 		continueButton.addActionListener(this);
+		
+		restartButton = new JButton("Restart");
+		restartButton.setVisible(true);
+		restartButton.addActionListener(this);
 		
 		diceboxes = new JCheckBox[6];
 		dicevalues = new JLabel[6];
@@ -46,6 +51,30 @@ public class SelectScorePanel extends MyPanel
 		
 		add(continueButton);
 		add(doneButton);
+		add(restartButton);
+	}
+	
+	private int[] GetSelectedDice()
+	{
+		int length = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			if (diceboxes[i].isSelected())
+				length++;
+		}
+		
+		int[] selectedDice = new int[length];
+		
+		int k = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			if (diceboxes[i].isSelected())
+			{
+				selectedDice[k] = i;
+				k++;
+			}
+		}	
+		return selectedDice;
 	}
 	
 	@Override
@@ -63,7 +92,14 @@ public class SelectScorePanel extends MyPanel
 		{
 			if (!CheckCallback())
 				return;
-			callback.Continue();
+			callback.Continue(GetSelectedDice());
+		}
+		
+		else if (arg0.getSource() == restartButton)
+		{
+			if (!CheckCallback())
+				return;
+			callback.Restart();
 		}
 		
 		for (int i = 0; i < 6; i++)
@@ -72,10 +108,14 @@ public class SelectScorePanel extends MyPanel
 			{
 				if (!CheckCallback())
 					return;
+				/*
 				if (diceboxes[i].isSelected())
 					callback.LockDie(i);
 				else
 					callback.UnlockDie(i);
+				*/
+				continueButton.setEnabled(callback.CanChoose(GetSelectedDice()));
+				
 			}
 		}
 	}
@@ -103,6 +143,7 @@ public class SelectScorePanel extends MyPanel
 		if (!CheckCallback())
 			return;
 		UpdateDice();
+		continueButton.setEnabled(false);
 	}
 
 }

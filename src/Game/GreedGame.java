@@ -11,6 +11,7 @@ public class GreedGame implements GUI_Callback
 {
 
 	DiceManager dManager;
+	ScoreManager sManager;
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 	
@@ -31,6 +32,7 @@ public class GreedGame implements GUI_Callback
 		gameState = new PreGameState();
 		
 		dManager = new DiceManager();
+		sManager = new ScoreManager();
 
 	}
 
@@ -60,11 +62,14 @@ public class GreedGame implements GUI_Callback
 	}
 	
 	@Override
-	public void Continue() 
+	public void Continue(int[] selectedDice) 
 	{
 		// TODO Auto-generated method stub
 		if (gameState.CanContinue())
 		{
+			for (int i = 0; i < selectedDice.length; i++)
+				dManager.LockDie(selectedDice[i]);
+			
 			gameState = gameState.ChangeState(new RollDiceState());
 			gui.SetGUIState(GUIState.RollDice);
 		}
@@ -102,6 +107,8 @@ public class GreedGame implements GUI_Callback
 		if (gameState.CanStartGame())
 		{
 			//Reset
+			dManager.Reset();
+			sManager.Reset();
 			gameState = gameState.ChangeState(new RollDiceState());
 			gui.SetGUIState(GUIState.RollDice);		
 		}
@@ -168,7 +175,7 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		dManager.UnselectDie(index);
 	}
-
+/*
 	@Override
 	public void LockDie(int index) {
 		// TODO Auto-generated method stub
@@ -179,5 +186,46 @@ public class GreedGame implements GUI_Callback
 	public void UnlockDie(int index) {
 		// TODO Auto-generated method stub
 		dManager.UnlockDie(index);
+	}
+*/
+	@Override
+	public boolean CanChoose(int[] selectedDice) 
+	{
+		// TODO Auto-generated method stub
+		int[] values = new int[selectedDice.length];
+		
+		for (int i = 0; i < values.length; i++)
+		{
+			int index = selectedDice[i];
+			if (dManager.isDieLocked(index))
+				return false;
+			values[i] = dManager.GetValue(index);
+		}
+		
+		return sManager.CanChoose(values);
+	}
+
+	@Override
+	public int GetScore() 
+	{
+		// TODO Auto-generated method stub
+		return sManager.GetScore();
+	}
+
+	@Override
+	public int GetScore(int[] selectedDice) 
+	{
+		// TODO Auto-generated method stub
+		int[] values = new int[selectedDice.length];
+		
+		for (int i = 0; i < values.length; i++)
+		{
+			int index = selectedDice[i];
+			if (dManager.isDieLocked(index))
+				return 0;
+			values[i] = dManager.GetValue(index);
+		}
+		
+		return sManager.GetScore(values);
 	}
 }

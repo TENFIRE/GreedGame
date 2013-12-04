@@ -3,7 +3,7 @@ package GUI;
 public interface GUI_Callback 
 {
 	public void Roll();
-	public void Continue();
+	public void Continue(int[] selectedDice);
 	public void Done();
 	public void Restart();
 	
@@ -16,11 +16,12 @@ public interface GUI_Callback
 	public boolean IsDieLocked(int index);
 	public int[] GetDice();
 	
+	public boolean CanChoose(int[] selectedDice);
+	public int GetScore();
+	public int GetScore(int[] selectedDice);
+	
 	public void SelectDie(int index);
 	public void UnselectDie(int index);
-	
-	public void LockDie(int index);
-	public void UnlockDie(int index);
 	
 	public String[] GetTypes();
 	

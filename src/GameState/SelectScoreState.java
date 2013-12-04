@@ -29,7 +29,7 @@ public class SelectScoreState implements GameState_Interface
 	@Override
 	public boolean CanRestart() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
