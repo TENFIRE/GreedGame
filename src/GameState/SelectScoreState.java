@@ -8,10 +8,10 @@ public class SelectScoreState implements GameState_Interface
 {
 
 	@Override
-	public GameState_Interface ChangeState(GameState_Interface newState) 
+	public void ChangeState(GreedGame game, GameState_Interface state)
 	{
 		// TODO Auto-generated method stub
-		return newState;
+		game.SetState(state);
 	}
 
 	@Override
@@ -42,6 +42,13 @@ public class SelectScoreState implements GameState_Interface
 	public boolean CanContinue() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public void SetGUI(GreedGame game) 
+	{
+		// TODO Auto-generated method stub
+		game.SetGUIState(GUIState.SelectScore);
 	}
 
 

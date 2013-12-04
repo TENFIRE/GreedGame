@@ -6,7 +6,9 @@ import Game.GreedGame;
 
 public interface GameState_Interface
 {
-	public GameState_Interface ChangeState(GameState_Interface newState);
+	public void ChangeState(GreedGame game, GameState_Interface state);
+	
+	public void SetGUI(GreedGame game);
 	
 	public boolean CanRoll();
 	

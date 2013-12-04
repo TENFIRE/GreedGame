@@ -1,45 +1,59 @@
 package GameState;
 
 import GUI.GUI_Interface;
+import GUI.GUI_Interface.GUIState;
+import Game.GreedGame;
 
 public class RollDiceState implements GameState_Interface
 {
 
 	@Override
-	public GameState_Interface ChangeState(GameState_Interface newState) 
+	public void ChangeState(GreedGame game, GameState_Interface state)
 	{
 		// TODO Auto-generated method stub
-		return newState;
+		game.SetState(state);
 	}
 
 	@Override
-	public boolean CanRoll() {
+	public boolean CanRoll() 
+	{
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean CanDone() {
+	public boolean CanDone() 
+	{
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean CanRestart() {
+	public boolean CanRestart() 
+	{
 		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
-	public boolean CanStartGame() {
+	public boolean CanStartGame() 
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean CanContinue() {
+	public boolean CanContinue() 
+	{
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void SetGUI(GreedGame game) 
+	{
+		// TODO Auto-generated method stub
+		game.SetGUIState(GUIState.RollDice);
 	}
 
 }

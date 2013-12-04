@@ -4,6 +4,7 @@ import GUI.GUI_Callback;
 import GUI.GUI_Interface;
 import GUI.GUI_Interface.GUIState;
 import GameState.*;
+import Player.PlayerManager;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,10 @@ public class GreedGame implements GUI_Callback
 
 	DiceManager dManager;
 	ScoreManager sManager;
+	PlayerManager pManager;
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
-	
-	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI"};
-	
-	
+
 	public GreedGame()
 	{
 		
@@ -33,7 +32,7 @@ public class GreedGame implements GUI_Callback
 		
 		dManager = new DiceManager();
 		sManager = new ScoreManager();
-
+		pManager = new PlayerManager();
 	}
 
 	@Override
@@ -45,8 +44,7 @@ public class GreedGame implements GUI_Callback
 			//only roll selected dice
 			dManager.RollSelected();
 			dManager.UnselectAll();
-			gameState = gameState.ChangeState(new SelectScoreState());
-			gui.SetGUIState(GUIState.SelectScore);
+			gameState.ChangeState(this, new SelectScoreState());
 		}
 	}
 
@@ -56,8 +54,7 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanDone())
 		{
-			gameState = gameState.ChangeState(new PostGameState());
-			gui.SetGUIState(GUIState.PostGame);
+			gameState.ChangeState(this, new PostGameState());
 		}
 	}
 	
@@ -70,8 +67,7 @@ public class GreedGame implements GUI_Callback
 			for (int i = 0; i < selectedDice.length; i++)
 				dManager.LockDie(selectedDice[i]);
 			
-			gameState = gameState.ChangeState(new RollDiceState());
-			gui.SetGUIState(GUIState.RollDice);
+			gameState.ChangeState(this, new RollDiceState());
 		}
 	}
 
@@ -81,8 +77,7 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanRestart())
 		{
-			gameState = gameState.ChangeState(new PreGameState());
-			gui.SetGUIState(GUIState.PreGame);			
+			gameState.ChangeState(this, new PreGameState());	
 		}
 	}
 
@@ -109,8 +104,7 @@ public class GreedGame implements GUI_Callback
 			//Reset
 			dManager.Reset();
 			sManager.Reset();
-			gameState = gameState.ChangeState(new RollDiceState());
-			gui.SetGUIState(GUIState.RollDice);		
+			gameState.ChangeState(this, new RollDiceState());
 		}
 	}
 
@@ -118,7 +112,7 @@ public class GreedGame implements GUI_Callback
 	public String[] GetTypes() 
 	{
 		// TODO Auto-generated method stub
-		return playerTypes;
+		return pManager.GetPlayerTypes();
 	}
 
 	@Override
@@ -202,7 +196,7 @@ public class GreedGame implements GUI_Callback
 			values[i] = dManager.GetValue(index);
 		}
 		
-		return sManager.CanChoose(values);
+		return sManager.GetScore(values) > 0; //300 första rollen
 	}
 
 	@Override
@@ -227,5 +221,16 @@ public class GreedGame implements GUI_Callback
 		}
 		
 		return sManager.GetScore(values);
+	}
+	
+	public void SetGUIState(GUIState state)
+	{
+		gui.SetGUIState(state);
+	}
+	
+	public void SetState(GameState_Interface state)
+	{
+		gameState = state;
+		gameState.SetGUI(this);
 	}
 }
