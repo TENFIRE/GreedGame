@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
@@ -21,8 +22,17 @@ public class PostGamePanel extends MyPanel {
 	private JButton restartButton;
 	private JLabel winnerLabel;
 	
+	private JPanel buttonPanel;
+	private JPanel winnerPanel;
+	
 	public PostGamePanel()
 	{
+		buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout());
+		
+		winnerPanel = new JPanel();
+		winnerPanel.setLayout(new FlowLayout());
+		
 		restartButton = new JButton("Restart");
 		restartButton.setVisible(true);
 		restartButton.addActionListener(this);
@@ -31,9 +41,12 @@ public class PostGamePanel extends MyPanel {
 		winnerLabel.setVisible(true);
 		winnerLabel.setText("");
 		
-		setLayout(new FlowLayout());
-		add(restartButton);
-		add(winnerLabel);
+		buttonPanel.add(restartButton);
+		winnerPanel.add(winnerLabel);
+		
+		setLayout(new BorderLayout());
+		add(winnerPanel, BorderLayout.NORTH);
+		add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
 	@Override

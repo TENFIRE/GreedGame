@@ -1,11 +1,13 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class SelectScorePanel extends MyPanel
 {
@@ -14,11 +16,24 @@ public class SelectScorePanel extends MyPanel
 	private JButton continueButton;
 	private JButton restartButton;
 	
+	private JPanel dicePanel;
+	private JPanel buttonPanel;
+	
+	private ScorePanel scorePanel;
+	
 	private JCheckBox diceboxes[];
 	private JLabel dicevalues[];
 	
 	public SelectScorePanel()
 	{
+		
+		dicePanel = new JPanel();
+		buttonPanel = new JPanel();
+		dicePanel.setLayout(new FlowLayout());
+		buttonPanel.setLayout(new FlowLayout());
+		
+		scorePanel = new ScorePanel();
+		
 		doneButton = new JButton("Done");
 		doneButton.setVisible(true);
 		doneButton.addActionListener(this);
@@ -34,8 +49,6 @@ public class SelectScorePanel extends MyPanel
 		diceboxes = new JCheckBox[6];
 		dicevalues = new JLabel[6];
 		
-		setLayout(new FlowLayout());
-		
 		for (int i = 0; i < 6; i++)
 		{
 			diceboxes[i] = new JCheckBox();
@@ -45,13 +58,26 @@ public class SelectScorePanel extends MyPanel
 			dicevalues[i] = new JLabel();
 			dicevalues[i].setVisible(true);
 
-			add(diceboxes[i]);
-			add(dicevalues[i]);
+			dicePanel.add(diceboxes[i]);
+			dicePanel.add(dicevalues[i]);
 		}
 		
-		add(continueButton);
-		add(doneButton);
-		add(restartButton);
+		buttonPanel.add(continueButton);
+		buttonPanel.add(doneButton);
+		buttonPanel.add(restartButton);
+		
+		setLayout(new BorderLayout());
+		
+		add(scorePanel, BorderLayout.NORTH);
+		add(dicePanel, BorderLayout.CENTER);
+		add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	public void SetCallback(GUI_Callback callback) 
+	{
+		super.SetCallback(callback);
+		scorePanel.SetCallback(callback);
 	}
 	
 	private int[] GetSelectedDice()
@@ -144,6 +170,7 @@ public class SelectScorePanel extends MyPanel
 			return;
 		UpdateDice();
 		continueButton.setEnabled(false);
+		scorePanel.UpdateData();
 	}
 
 }

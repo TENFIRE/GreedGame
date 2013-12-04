@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -22,11 +23,20 @@ public class PreGamePanel extends MyPanel
 	private JTable playerTable;
 	private JButton addButton, removeButton, startButton;
 	
+	private JPanel playerPanel;
+	private JPanel buttonPanel;
+	
+	
 	String[] columnNames = { "Name", "Type" };
 	DefaultTableModel model;
 	
 	public PreGamePanel()
 	{
+		playerPanel = new JPanel();
+		buttonPanel = new JPanel();
+		playerPanel.setLayout(new FlowLayout());
+		buttonPanel.setLayout(new FlowLayout());
+		
 		addButton = new JButton("Add Player");
 		addButton.setVisible(true);
 		addButton.addActionListener(this);
@@ -52,13 +62,17 @@ public class PreGamePanel extends MyPanel
 		
 		
 	    scrollPane = new JScrollPane(playerTable);
-	    scrollPane.setPreferredSize(new Dimension(500,300));
+	    //scrollPane.setPreferredSize(new Dimension(500,300));
 	    
-	    setLayout(new FlowLayout());
-		add(scrollPane);
-		add(addButton);
-		add(removeButton);
-		add(startButton);
+	    playerPanel.add(scrollPane);
+	    buttonPanel.add(addButton);
+	    buttonPanel.add(removeButton);
+	    buttonPanel.add(startButton);
+	    
+	    setLayout(new BorderLayout());
+	    add(playerPanel, BorderLayout.NORTH);
+	    add(buttonPanel, BorderLayout.SOUTH);
+		
 	}
 	
 	@Override

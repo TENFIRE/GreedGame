@@ -1,12 +1,15 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
+import javax.security.auth.callback.Callback;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -17,10 +20,21 @@ public class RollDicePanel extends MyPanel
 	private JButton rollButton;
 	private JButton restartButton;
 	
+	private JPanel dicePanel;
+	private JPanel buttonPanel;
+	private ScorePanel scorePanel;
+	
 	private JCheckBox diceboxes[];
 	
 	public RollDicePanel()
 	{
+		dicePanel = new JPanel();
+		buttonPanel = new JPanel();
+		dicePanel.setLayout(new FlowLayout());
+		buttonPanel.setLayout(new FlowLayout());
+		
+		scorePanel = new ScorePanel();
+		
 		rollButton = new JButton("Roll");
 		rollButton.setVisible(true);
 		rollButton.addActionListener(this);
@@ -30,22 +44,31 @@ public class RollDicePanel extends MyPanel
 		restartButton.addActionListener(this);
 		
 		diceboxes = new JCheckBox[6];
-		
-		
-		
-		setLayout(new FlowLayout());
-		
+
 		
 		for (int i = 0; i < 6; i++)
 		{
 			diceboxes[i] = new JCheckBox();
 			diceboxes[i].setVisible(true);
 			diceboxes[i].addActionListener(this);
-			add(diceboxes[i]);
+			dicePanel.add(diceboxes[i]);
 		}
 		
-		add(rollButton);
-		add(restartButton);
+		buttonPanel.add(rollButton);
+		buttonPanel.add(restartButton);
+		
+		setLayout(new BorderLayout());
+		
+		add(dicePanel, BorderLayout.CENTER);
+	    add(buttonPanel, BorderLayout.SOUTH);
+	    add(scorePanel, BorderLayout.NORTH);
+	}
+	
+	@Override
+	public void SetCallback(GUI_Callback callback) 
+	{
+		super.SetCallback(callback);
+		scorePanel.SetCallback(callback);
 	}
 	
 	
@@ -99,9 +122,7 @@ public class RollDicePanel extends MyPanel
 				diceboxes[i].setEnabled(true);
 				diceboxes[i].setSelected(callback.IsDieSelected(i));
 			}
-			
 		}
-		
 	}
 
 	@Override
@@ -111,5 +132,6 @@ public class RollDicePanel extends MyPanel
 		if (!CheckCallback())
 			return;
 		UpdateDice();
+		scorePanel.UpdateData();
 	}
 }
