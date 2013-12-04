@@ -36,4 +36,10 @@ public class PostGameState implements GameState_Interface
 		return false;
 	}
 
+	@Override
+	public boolean CanContinue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

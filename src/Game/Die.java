@@ -9,7 +9,7 @@ public class Die
 	public Die() 
 	{
 		random = new Random();
-		value = 1;
+		value = -1;
 	}
 
 	public void Roll() 

@@ -51,7 +51,19 @@ public class DiceManager
 	public void LockDie(int index)
 	{
 		if (!lockedDice.contains(index) && !selectedDice.contains(index) )
+		{
+			System.out.println("Locked: " + index);
 			lockedDice.add(index);
+		}
+	}
+	
+	public void UnlockDie(int index)
+	{
+		if (lockedDice.contains(index) && !selectedDice.contains(index) )
+		{
+			System.out.println("Unlocked: " + index);
+			lockedDice.remove((Object)index);
+		}
 	}
 	
 	public void SelectDie(int index)
@@ -84,9 +96,14 @@ public class DiceManager
 	
 	public void SelectAll()
 	{
-		Reset();
+		selectedDice.clear();
 		for (int i = 0; i < NUMDICE; i++)
-			selectedDice.add(i);		
+			SelectDie(i);		
+	}
+	
+	public void UnselectAll()
+	{
+		selectedDice.clear();	
 	}
 	
 	public void Reset()

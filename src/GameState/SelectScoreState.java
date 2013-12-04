@@ -23,7 +23,7 @@ public class SelectScoreState implements GameState_Interface
 	@Override
 	public boolean CanDone() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -36,6 +36,12 @@ public class SelectScoreState implements GameState_Interface
 	public boolean CanStartGame() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean CanContinue() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 

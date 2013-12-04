@@ -10,6 +10,8 @@ public interface GameState_Interface
 	
 	public boolean CanRoll();
 	
+	public boolean CanContinue();
+	
 	public boolean CanDone();
 	
 	public boolean CanRestart();

@@ -42,8 +42,9 @@ public class GreedGame implements GUI_Callback
 		{
 			//only roll selected dice
 			dManager.RollSelected();
-			gameState = gameState.ChangeState(new PostGameState());
-			gui.SetGUIState(GUIState.PostGame);
+			dManager.UnselectAll();
+			gameState = gameState.ChangeState(new SelectScoreState());
+			gui.SetGUIState(GUIState.SelectScore);
 		}
 	}
 
@@ -51,10 +52,21 @@ public class GreedGame implements GUI_Callback
 	public void Done() 
 	{
 		// TODO Auto-generated method stub
-		
 		if (gameState.CanDone())
 		{
-			gameState = gameState.ChangeState(new SelectScoreState());
+			gameState = gameState.ChangeState(new PostGameState());
+			gui.SetGUIState(GUIState.PostGame);
+		}
+	}
+	
+	@Override
+	public void Continue() 
+	{
+		// TODO Auto-generated method stub
+		if (gameState.CanContinue())
+		{
+			gameState = gameState.ChangeState(new RollDiceState());
+			gui.SetGUIState(GUIState.RollDice);
 		}
 	}
 
@@ -89,6 +101,7 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanStartGame())
 		{
+			//Reset
 			gameState = gameState.ChangeState(new RollDiceState());
 			gui.SetGUIState(GUIState.RollDice);		
 		}
@@ -156,5 +169,15 @@ public class GreedGame implements GUI_Callback
 		dManager.UnselectDie(index);
 	}
 
+	@Override
+	public void LockDie(int index) {
+		// TODO Auto-generated method stub
+		dManager.LockDie(index);
+	}
 
+	@Override
+	public void UnlockDie(int index) {
+		// TODO Auto-generated method stub
+		dManager.UnlockDie(index);
+	}
 }

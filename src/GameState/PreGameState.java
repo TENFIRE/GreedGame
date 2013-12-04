@@ -38,6 +38,12 @@ public class PreGameState implements GameState_Interface
 		return true;
 	}
 
+	@Override
+	public boolean CanContinue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 }

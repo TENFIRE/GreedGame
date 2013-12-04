@@ -3,6 +3,7 @@ package GUI;
 public interface GUI_Callback 
 {
 	public void Roll();
+	public void Continue();
 	public void Done();
 	public void Restart();
 	
@@ -17,6 +18,9 @@ public interface GUI_Callback
 	
 	public void SelectDie(int index);
 	public void UnselectDie(int index);
+	
+	public void LockDie(int index);
+	public void UnlockDie(int index);
 	
 	public String[] GetTypes();
 	

@@ -14,9 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class RollDicePanel extends MyPanel
 {
-
-	int dice[];
-	
 	private JButton rollButton;
 	private JButton restartButton;
 	
@@ -37,8 +34,7 @@ public class RollDicePanel extends MyPanel
 		
 		
 		setLayout(new FlowLayout());
-		add(rollButton);
-		add(restartButton);
+		
 		
 		for (int i = 0; i < 6; i++)
 		{
@@ -47,6 +43,9 @@ public class RollDicePanel extends MyPanel
 			diceboxes[i].addActionListener(this);
 			add(diceboxes[i]);
 		}
+		
+		add(rollButton);
+		add(restartButton);
 	}
 	
 	
@@ -70,6 +69,8 @@ public class RollDicePanel extends MyPanel
 		
 		for (int i = 0; i < 6; i++)
 		{
+			if (!CheckCallback())
+				return;
 			if (e.getSource() == diceboxes[i])
 			{
 				if (diceboxes[i].isSelected())
@@ -84,7 +85,7 @@ public class RollDicePanel extends MyPanel
 	{
 		if (!CheckCallback())
 			return;
-		dice = callback.GetDice();
+		int[] dice = callback.GetDice();
 		
 		for (int i = 0; i < 6; i++)
 		{
