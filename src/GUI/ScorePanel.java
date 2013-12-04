@@ -54,6 +54,9 @@ public class ScorePanel extends MyPanel
 	public void UpdateData() 
 	{
 		// TODO Auto-generated method stub
+		if (!CheckCallback())
+			return;
+		
 		String[][] data = callback.GetPlayerData();	
 		
 		if (data != null)

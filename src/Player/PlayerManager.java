@@ -89,4 +89,18 @@ public class PlayerManager
 		return null;
 	}
 	
+	public String[][] GetPlayerData()
+	{
+		String[][] data = new String[playerList.size()][3];
+		
+		for (int i = 0; i < playerList.size(); i++)
+		{
+			PlayerEntry player = playerList.get(i);
+			data[i][0] = player.GetName();
+			data[i][1] = player.GetType();
+			data[i][2] = Integer.toString(player.GetScore());
+		}
+		return data;
+	}
+	
 }

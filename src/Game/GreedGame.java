@@ -24,15 +24,17 @@ public class GreedGame implements GUI_Callback
 	
 	public void Initialize()
 	{
+		dManager = new DiceManager();
+		sManager = new ScoreManager();
+		pManager = new PlayerManager();
+		
 		gui = new GUI();
 		gui.Initialize();
 		gui.SetCallback(this);
 		
 		gameState = new PreGameState();
 		
-		dManager = new DiceManager();
-		sManager = new ScoreManager();
-		pManager = new PlayerManager();
+		
 	}
 
 	@Override
@@ -92,7 +94,8 @@ public class GreedGame implements GUI_Callback
 	public String[][] GetPlayerData() 
 	{
 		// TODO Auto-generated method stub
-		return null;
+		//pManager.
+		return pManager.GetPlayerData();
 	}
 
 	@Override
@@ -119,14 +122,14 @@ public class GreedGame implements GUI_Callback
 	public boolean AddPlayer(String name, String type) 
 	{
 		// TODO Auto-generated method stub
-		return true;
+		return pManager.AddPlayer(name, type);
 	}
 
 	@Override
 	public void RemovePlayer(String name, String type) 
 	{
 		// TODO Auto-generated method stub
-		
+		pManager.RemovePlayer(name, type);
 	}
 
 	@Override
