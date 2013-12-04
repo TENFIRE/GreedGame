@@ -28,7 +28,7 @@ public class DiceManager implements DiceManager_Interface
 	{
 		return index >= 0 && index < dice.length;
 	}
-	
+	@Override
 	public int GetValue(int index)
 	{
 		if (CheckIndex(index))
@@ -36,18 +36,25 @@ public class DiceManager implements DiceManager_Interface
 		return -1;
 	}
 	
-	public void RollSelected()
+	@Override
+	public void LockAndRoll()
 	{
+		lockedDice.addAll(selectedDice);
+		selectedDice.clear();
+		
 		for (int i = 0; i < NUMDICE; i++)
 		{
-			if (selectedDice.contains(i))
+			if (!lockedDice.contains(i))
 			{
 				System.out.println("Rolled: " + i);
 				dice[i].Roll();
 			}
 		}
 	}
+
 	
+	/*
+	@Override
 	public void LockDie(int index)
 	{
 		if (!lockedDice.contains(index) && !selectedDice.contains(index) )
@@ -56,7 +63,7 @@ public class DiceManager implements DiceManager_Interface
 			lockedDice.add(index);
 		}
 	}
-	
+	@Override
 	public void UnlockDie(int index)
 	{
 		if (lockedDice.contains(index) && !selectedDice.contains(index) )
@@ -65,7 +72,9 @@ public class DiceManager implements DiceManager_Interface
 			lockedDice.remove((Object)index);
 		}
 	}
+	*/
 	
+	@Override
 	public void SelectDie(int index)
 	{
 		if (!selectedDice.contains(index) && !lockedDice.contains(index))
@@ -74,7 +83,7 @@ public class DiceManager implements DiceManager_Interface
 			selectedDice.add(index);
 		}
 	}
-	
+	@Override
 	public void UnselectDie(int index)
 	{
 		if (selectedDice.contains(index))
@@ -84,31 +93,45 @@ public class DiceManager implements DiceManager_Interface
 		}
 	}
 	
+	@Override
 	public boolean isDieSelected(int index)
 	{
 		return selectedDice.contains(index);
 	}
-	
+	@Override
 	public boolean isDieLocked(int index)
 	{
 		return lockedDice.contains(index);
 	}
-	
+	@Override
 	public void SelectAll()
 	{
 		selectedDice.clear();
 		for (int i = 0; i < NUMDICE; i++)
 			SelectDie(i);		
 	}
-	
+	@Override
 	public void UnselectAll()
 	{
 		selectedDice.clear();	
 	}
-	
+	@Override
 	public void Reset()
 	{
 		lockedDice.clear();
 		selectedDice.clear();
+	}
+
+	@Override
+	public int[] GetSelectedValues() {
+		// TODO Auto-generated method stub
+		int[] selected = new int[selectedDice.size()];
+		
+		for (int i = 0; i < selected.length; i ++)
+		{
+			selected[i] = dice[selectedDice.get(i)].GetValue();
+		}
+		
+		return selected;
 	}
 }

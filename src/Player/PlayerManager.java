@@ -7,11 +7,11 @@ public class PlayerManager implements PlayerManager_Interface
 
 	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI", "Clever AI", "Random AI"};
 	
-	ArrayList<PlayerEntry> playerList;
+	ArrayList<PlayerInfo> playerList;
 	
 	public PlayerManager()
 	{
-		playerList = new ArrayList<PlayerEntry>();
+		playerList = new ArrayList<PlayerInfo>();
 	}
 	
 	private boolean CheckIndex(int index)
@@ -32,12 +32,12 @@ public class PlayerManager implements PlayerManager_Interface
 		}
 		return null;
 	}
-	
+	@Override
 	public String[] GetPlayerTypes()
 	{
 		return playerTypes;
 	}
-	
+	@Override
 	public boolean IsAI(int index)
 	{
 		if (CheckIndex(index))
@@ -45,31 +45,31 @@ public class PlayerManager implements PlayerManager_Interface
 		
 		return !playerList.get(index).GetType().equals(playerTypes[0]);
 	}
-	
+	@Override
 	public boolean Contains(String name, String type)
 	{
-		for (PlayerEntry player : playerList) 
+		for (PlayerInfo player : playerList) 
 		{
 			if (player.GetName().equals(name) && player.GetType().equals(type))
 				return true;
 		}
 		return false;
 	}
-	
+	@Override
 	public boolean AddPlayer(String name, String type)
 	{
 		if (Contains(name, type))
 			return false;
 		
-		playerList.add(new PlayerEntry(name, type));		
+		playerList.add(new PlayerInfo(name, type));		
 		return true;
 	}
-	
+	@Override
 	public boolean RemovePlayer(String name, String type)
 	{
 		for (int i = 0; i < playerList.size(); i++)
 		{
-			PlayerEntry player = playerList.get(i);
+			PlayerInfo player = playerList.get(i);
 			
 			if (player.GetName().equals(name) && player.GetType().equals(type))
 			{
@@ -79,7 +79,7 @@ public class PlayerManager implements PlayerManager_Interface
 		}
 		return false;
 	}
-	
+	@Override
 	public int[] SelectScore(int index)
 	{
 		//no dice = Done
@@ -88,19 +88,50 @@ public class PlayerManager implements PlayerManager_Interface
 			return null;
 		return null;
 	}
-	
+	@Override
 	public String[][] GetPlayerData()
 	{
 		String[][] data = new String[playerList.size()][3];
 		
 		for (int i = 0; i < playerList.size(); i++)
 		{
-			PlayerEntry player = playerList.get(i);
+			data[i] = GetPlayerData(i);
+			/*
+			PlayerInfo player = playerList.get(i);
 			data[i][0] = player.GetName();
 			data[i][1] = player.GetType();
 			data[i][2] = Integer.toString(player.GetScore());
+			*/
 		}
 		return data;
 	}
 	
+	@Override
+	public String[] GetPlayerData(int index) 
+	{
+		// TODO Auto-generated method stubPlayerInfo player = playerList.get(i);
+		if (index >= 0 && index < playerList.size())
+		{
+			PlayerInfo player = playerList.get(index);
+			return new String[]{ player.GetName(), player.GetType(), Integer.toString(player.GetScore()) };
+		}
+		return null;
+	}
+	
+
+	@Override
+	public int GetNextPlayerIndex(int index) 
+	{
+		// TODO Auto-generated method stub
+		return (index + 1) % playerList.size();
+	}
+
+	@Override
+	public int GetNumberOfPlayers() 
+	{
+		// TODO Auto-generated method stub
+		return playerList.size();
+	}
+
+
 }

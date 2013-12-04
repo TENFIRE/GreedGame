@@ -15,4 +15,10 @@ public interface PlayerManager_Interface
 	public int[] SelectScore(int index);
 	
 	public String[][] GetPlayerData();
+	
+	public String[] GetPlayerData(int index);
+	
+	public int GetNextPlayerIndex(int index);
+	
+	public int GetNumberOfPlayers();
 }

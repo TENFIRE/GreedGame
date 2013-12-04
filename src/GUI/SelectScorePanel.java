@@ -118,7 +118,7 @@ public class SelectScorePanel extends MyPanel
 		{
 			if (!CheckCallback())
 				return;
-			callback.Continue(GetSelectedDice());
+			callback.Continue();
 		}
 		
 		else if (arg0.getSource() == restartButton)
@@ -134,13 +134,13 @@ public class SelectScorePanel extends MyPanel
 			{
 				if (!CheckCallback())
 					return;
-				/*
+				
 				if (diceboxes[i].isSelected())
-					callback.LockDie(i);
+					callback.SelectDie(i);
 				else
-					callback.UnlockDie(i);
-				*/
-				continueButton.setEnabled(callback.CanChoose(GetSelectedDice()));
+					callback.UnselectDie(i);
+				
+				continueButton.setEnabled(callback.CanContinue());
 				
 			}
 		}

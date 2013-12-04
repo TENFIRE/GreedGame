@@ -1,32 +1,31 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
-import javax.security.auth.callback.Callback;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
-public class RollDicePanel extends MyPanel
+public class AIPanel extends MyPanel
 {
-	private JButton rollButton;
+
+	private JButton doneButton;
+	private JButton continueButton;
 	private JButton restartButton;
+	private JButton skipAIButton;
 	
 	private JPanel dicePanel;
 	private JPanel buttonPanel;
+	
 	private ScorePanel scorePanel;
 	
 	private JCheckBox diceboxes[];
+	private JLabel dicevalues[];
 	
-	public RollDicePanel()
+	public AIPanel()
 	{
 		dicePanel = new JPanel();
 		buttonPanel = new JPanel();
@@ -35,33 +34,47 @@ public class RollDicePanel extends MyPanel
 		
 		scorePanel = new ScorePanel();
 		
-		rollButton = new JButton("Roll");
-		rollButton.setVisible(true);
-		rollButton.addActionListener(this);
+		doneButton = new JButton("Done");
+		doneButton.setVisible(true);
+		doneButton.addActionListener(this);
+		
+		continueButton = new JButton("Continue");
+		continueButton.setVisible(true);
+		continueButton.addActionListener(this);
 		
 		restartButton = new JButton("Restart");
 		restartButton.setVisible(true);
 		restartButton.addActionListener(this);
 		
+		skipAIButton = new JButton("Skip AI");
+		skipAIButton.setVisible(true);
+		skipAIButton.addActionListener(this);
+		
 		diceboxes = new JCheckBox[6];
-
+		dicevalues = new JLabel[6];
 		
 		for (int i = 0; i < 6; i++)
 		{
 			diceboxes[i] = new JCheckBox();
 			diceboxes[i].setVisible(true);
 			diceboxes[i].addActionListener(this);
+			
+			dicevalues[i] = new JLabel();
+			dicevalues[i].setVisible(true);
+
 			dicePanel.add(diceboxes[i]);
+			dicePanel.add(dicevalues[i]);
 		}
 		
-		buttonPanel.add(rollButton);
+		buttonPanel.add(continueButton);
+		buttonPanel.add(doneButton);
 		buttonPanel.add(restartButton);
 		
 		setLayout(new BorderLayout());
 		
+		add(scorePanel, BorderLayout.NORTH);
 		add(dicePanel, BorderLayout.CENTER);
-	    add(buttonPanel, BorderLayout.SOUTH);
-	    add(scorePanel, BorderLayout.NORTH);
+		add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
 	@Override
@@ -71,35 +84,40 @@ public class RollDicePanel extends MyPanel
 		scorePanel.SetCallback(callback);
 	}
 	
-	
 	@Override
-	public void actionPerformed(ActionEvent e) 
+	public void actionPerformed(ActionEvent arg0) 
 	{
 		// TODO Auto-generated method stub
-		if (e.getSource() == restartButton)
+		// TODO Auto-generated method stub
+		if (arg0.getSource() == doneButton)
+		{
+			if (!CheckCallback())
+				return;
+			callback.Done();
+		}
+		
+		else if (arg0.getSource() == continueButton)
+		{
+			
+		}
+
+		else if (arg0.getSource() == restartButton)
 		{
 			if (!CheckCallback())
 				return;
 			callback.Restart();
 		}
 		
-		else if (e.getSource() == rollButton)
+		else if (arg0.getSource() == skipAIButton)
 		{
-			if (!CheckCallback())
-				return;
-			callback.Roll();
+			
 		}
 		
 		for (int i = 0; i < 6; i++)
 		{
-			if (!CheckCallback())
-				return;
-			if (e.getSource() == diceboxes[i])
+			if (arg0.getSource() == diceboxes[i])
 			{
-				if (diceboxes[i].isSelected())
-					callback.SelectDie(i);
-				else
-					callback.UnselectDie(i);
+				diceboxes[i].setSelected(!diceboxes[i].isSelected());
 			}
 		}
 	}
@@ -111,27 +129,24 @@ public class RollDicePanel extends MyPanel
 		int[] dice = callback.GetDice();
 		
 		for (int i = 0; i < 6; i++)
-		{
-			if (callback.IsDieLocked(i))
-			{
-				diceboxes[i].setEnabled(false);
-				diceboxes[i].setSelected(false);
-			}
-			else
-			{
-				diceboxes[i].setEnabled(true);
-				diceboxes[i].setSelected(callback.IsDieSelected(i));
-			}
+		{			
+			diceboxes[i].setEnabled(!callback.IsDieLocked(i));	
+			diceboxes[i].setSelected(!callback.IsDieSelected(i));
+			
+			dicevalues[i].setText(Integer.toString(dice[i]));
 		}
+		
 	}
-
+	
 	@Override
 	public void UpdateData() 
 	{
 		// TODO Auto-generated method stub
 		if (!CheckCallback())
 			return;
-		UpdateDice();
 		scorePanel.UpdateData();
+		UpdateDice();
+		//update dice (selected
 	}
+
 }

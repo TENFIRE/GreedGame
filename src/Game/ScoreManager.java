@@ -108,7 +108,7 @@ public class ScoreManager implements ScoreManager_Interface
 		}
 		return dice;
 	}
-	
+	@Override
 	public int GetScore(int[] values)
 	{
 		int score = GetStreet(values);	//Prio 1 Highest score except 6 ones (can't happen at the same time)
@@ -123,17 +123,17 @@ public class ScoreManager implements ScoreManager_Interface
 			
 		return score;
 	}
-	
+	@Override
 	public void AddScore(int[] values)
 	{
 		this.score += GetScore(values);
 	}
-	
+	@Override
 	public int GetScore()
 	{
 		return score;
 	}
-	
+	@Override
 	public float GetScorePercentage(int numDices)
 	{
 		//http://giantbattlingrobots.blogspot.se/2009/10/farkle-probabilities.html
@@ -178,7 +178,7 @@ public class ScoreManager implements ScoreManager_Interface
 		
 		return newValues;
 	}
-	
+	@Override
 	public int[] SelectBestScore(int[] values)
 	{
 		int[] dice = null;
@@ -204,7 +204,7 @@ public class ScoreManager implements ScoreManager_Interface
 		
 		return dice;
 	}
-	
+	@Override
 	public void Reset()
 	{
 		score = 0;

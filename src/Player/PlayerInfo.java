@@ -1,19 +1,19 @@
 package Player;
 
-public class PlayerEntry 
+public class PlayerInfo 
 {
 	private String name;
 	private String type;
 	private int score;
 	
-	public PlayerEntry()
+	public PlayerInfo()
 	{
 		name = "";
 		type = "";
 		score = 0;
 	}
 	
-	public PlayerEntry(String name, String type)
+	public PlayerInfo(String name, String type)
 	{
 		this.name = name;
 		this.type = type;

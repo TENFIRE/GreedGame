@@ -55,11 +55,11 @@ public class GUI extends JFrame implements GUI_Interface
 		case PreGame:
 			panel = new PreGamePanel();
 			break;
-		case RollDice:
-			panel = new RollDicePanel();
-			break;
 		case SelectScore:
 			panel = new SelectScorePanel();
+			break;
+		case AIActive:
+			panel = new AIPanel();
 			break;
 		case PostGame:
 			panel = new PostGamePanel();
@@ -71,5 +71,12 @@ public class GUI extends JFrame implements GUI_Interface
 		panel.SetCallback(callback);
 		panel.UpdateData();
 		paintComponents(getGraphics());
+	}
+
+	@Override
+	public void UpdateData() 
+	{
+		// TODO Auto-generated method stub
+		panel.UpdateData();
 	}
 }

@@ -2,6 +2,7 @@ package Game;
 import GUI.GUI;
 import GUI.GUI_Callback;
 import GUI.GUI_Interface;
+import GUI.SelectScorePanel;
 import GUI.GUI_Interface.GUIState;
 import GameState.*;
 import Player.PlayerManager;
@@ -18,6 +19,8 @@ public class GreedGame implements GUI_Callback
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 
+	private int activePlayer = 0;
+	
 	public GreedGame()
 	{
 		
@@ -37,7 +40,7 @@ public class GreedGame implements GUI_Callback
 		
 		
 	}
-
+/*
 	@Override
 	public void Roll() 
 	{
@@ -50,6 +53,12 @@ public class GreedGame implements GUI_Callback
 			gameState.ChangeState(this, new SelectScoreState());
 		}
 	}
+	*/
+	
+	private boolean IsGameOver()
+	{
+		return false;
+	}
 
 	@Override
 	public void Done() 
@@ -57,23 +66,42 @@ public class GreedGame implements GUI_Callback
 		// TODO Auto-generated method stub
 		if (gameState.CanDone())
 		{
-			gameState.ChangeState(this, new PostGameState());
+			sManager.AddScore(dManager.GetSelectedValues());
+			//pManager.AddScore(activeIndex, sManager.GetScore());
+			
+			if (IsGameOver())
+				gameState.ChangeState(this, new PostGameState());
+			else
+			{
+				//change player
+				activePlayer = pManager.GetNextPlayerIndex(activePlayer);
+				if (pManager.IsAI(activePlayer))
+					gameState = new AIActiveState();
+				else
+					gameState.ChangeState(this, new SelectScoreState());
+				//gamestate = Select vs AI
+			}
 		}
 	}
 	
 	@Override
-	public void Continue(int[] selectedDice) 
+	public void Continue() 
 	{
 		// TODO Auto-generated method stub
 		if (gameState.CanContinue())
 		{
-			for (int i = 0; i < selectedDice.length; i++)
-				dManager.LockDie(selectedDice[i]);
-			
-			gameState.ChangeState(this, new RollDiceState());
+			sManager.AddScore(dManager.GetSelectedValues());
+			dManager.LockAndRoll();
+			gui.UpdateData();
 		}
 	}
 
+	private void NewRound()
+	{
+		dManager.Reset();
+		dManager.LockAndRoll();
+	}
+	
 	@Override
 	public void Restart() 
 	{
@@ -103,12 +131,14 @@ public class GreedGame implements GUI_Callback
 	public void StartGame() 
 	{
 		// TODO Auto-generated method stub
-		if (gameState.CanStartGame())
+		if (gameState.CanStartGame() && pManager.GetNumberOfPlayers() > 0)
 		{
 			//Reset
+			activePlayer = 0;
 			dManager.Reset();
 			sManager.Reset();
-			gameState.ChangeState(this, new RollDiceState());
+			NewRound();
+			gameState.ChangeState(this, new SelectScoreState());
 		}
 	}
 
@@ -187,43 +217,48 @@ public class GreedGame implements GUI_Callback
 	}
 */
 	@Override
-	public boolean CanChoose(int[] selectedDice) 
+	public boolean CanContinue() 
+	{
+		// TODO Auto-generated method stub	
+		if (gameState.CanContinue())
+		{
+			int[] values = dManager.GetSelectedValues();
+			int roundScore = sManager.GetScore();
+			int rollScore = sManager.GetScore(values);
+			
+			if (roundScore == 0)
+				return rollScore >= 300;
+			return rollScore > 0;
+			
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean CanDone() 
 	{
 		// TODO Auto-generated method stub
-		int[] values = new int[selectedDice.length];
-		
-		for (int i = 0; i < values.length; i++)
+		if (gameState.CanDone())
 		{
-			int index = selectedDice[i];
-			if (dManager.isDieLocked(index))
-				return false;
-			values[i] = dManager.GetValue(index);
+			//return AI == klar
+			return true;
 		}
 		
-		return sManager.GetScore(values) > 0; //300 första rollen
+		return false;
 	}
 
 	@Override
-	public int GetScore() 
+	public int GetRoundScore() 
 	{
 		// TODO Auto-generated method stub
 		return sManager.GetScore();
 	}
 
 	@Override
-	public int GetScore(int[] selectedDice) 
+	public int GetRollScore() 
 	{
-		// TODO Auto-generated method stub
-		int[] values = new int[selectedDice.length];
-		
-		for (int i = 0; i < values.length; i++)
-		{
-			int index = selectedDice[i];
-			if (dManager.isDieLocked(index))
-				return 0;
-			values[i] = dManager.GetValue(index);
-		}
-		
+		// TODO Auto-generated method stub		
+		int[] values = dManager.GetSelectedValues();
 		return sManager.GetScore(values);
 	}
 	
@@ -237,4 +272,20 @@ public class GreedGame implements GUI_Callback
 		gameState = state;
 		gameState.SetGUI(this);
 	}
+
+	@Override
+	public void SkipAI() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String[] GetActivePlayer() 
+	{
+		// TODO Auto-generated method stub
+		return pManager.GetPlayerData(activePlayer);
+	}
+
+
 }

@@ -4,12 +4,15 @@ public interface DiceManager_Interface
 {
 	public int GetValue(int index);
 	
-	public void RollSelected();
+	public int[] GetSelectedValues();
 	
+	public void LockAndRoll();
+	
+	/*
 	public void LockDie(int index);
 	
 	public void UnlockDie(int index);
-	
+	*/
 	public void SelectDie(int index);
 	
 	public void UnselectDie(int index);
