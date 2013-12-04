@@ -134,4 +134,14 @@ public class DiceManager implements DiceManager_Interface
 		
 		return selected;
 	}
+
+	@Override
+	public boolean IsAllLocked() 
+	{
+		// TODO Auto-generated method stub
+		for (int i = 0; i < dice.length; i++)
+			if (!lockedDice.contains(i))
+				return false;
+		return true;
+	}
 }

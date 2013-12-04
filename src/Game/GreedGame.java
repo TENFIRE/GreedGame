@@ -67,7 +67,7 @@ public class GreedGame implements GUI_Callback
 		if (gameState.CanDone())
 		{
 			sManager.AddScore(dManager.GetSelectedValues());
-			//pManager.AddScore(activeIndex, sManager.GetScore());
+			pManager.AddScore(activePlayer, sManager.GetScore());
 			
 			if (IsGameOver())
 				gameState.ChangeState(this, new PostGameState());
@@ -79,6 +79,8 @@ public class GreedGame implements GUI_Callback
 					gameState = new AIActiveState();
 				else
 					gameState.ChangeState(this, new SelectScoreState());
+				
+				NewRound();
 				//gamestate = Select vs AI
 			}
 		}
@@ -92,6 +94,10 @@ public class GreedGame implements GUI_Callback
 		{
 			sManager.AddScore(dManager.GetSelectedValues());
 			dManager.LockAndRoll();
+			
+			if (dManager.IsAllLocked())
+				dManager.Reset();
+			
 			gui.UpdateData();
 		}
 	}

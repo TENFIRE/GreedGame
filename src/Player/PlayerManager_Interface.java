@@ -21,4 +21,6 @@ public interface PlayerManager_Interface
 	public int GetNextPlayerIndex(int index);
 	
 	public int GetNumberOfPlayers();
+	
+	public void AddScore(int index, int score);
 }

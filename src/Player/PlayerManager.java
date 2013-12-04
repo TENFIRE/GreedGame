@@ -110,7 +110,7 @@ public class PlayerManager implements PlayerManager_Interface
 	public String[] GetPlayerData(int index) 
 	{
 		// TODO Auto-generated method stubPlayerInfo player = playerList.get(i);
-		if (index >= 0 && index < playerList.size())
+		if (CheckIndex(index))
 		{
 			PlayerInfo player = playerList.get(index);
 			return new String[]{ player.GetName(), player.GetType(), Integer.toString(player.GetScore()) };
@@ -131,6 +131,16 @@ public class PlayerManager implements PlayerManager_Interface
 	{
 		// TODO Auto-generated method stub
 		return playerList.size();
+	}
+
+	@Override
+	public void AddScore(int index, int score) 
+	{
+		// TODO Auto-generated method stub
+		if (CheckIndex(index))
+		{
+			playerList.get(index).AddScore(score);
+		}
 	}
 
 

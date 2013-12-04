@@ -26,4 +26,6 @@ public interface DiceManager_Interface
 	public void UnselectAll();
 	
 	public void Reset();
+
+	public boolean IsAllLocked();
 }

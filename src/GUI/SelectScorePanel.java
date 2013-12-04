@@ -18,19 +18,28 @@ public class SelectScorePanel extends MyPanel
 	
 	private JPanel dicePanel;
 	private JPanel buttonPanel;
+	private JPanel roundInfoPanel;
 	
 	private ScorePanel scorePanel;
 	
 	private JCheckBox diceboxes[];
 	private JLabel dicevalues[];
 	
+	private JLabel activePlayerLable, roundScoreLable, rollScoreLable;
+	
+	private static String playerString = "Active Player: ";
+	private static String roundString = "Round score: ";
+	private static String rollString = "Roll score: ";
+	
 	public SelectScorePanel()
 	{
 		
 		dicePanel = new JPanel();
 		buttonPanel = new JPanel();
+		roundInfoPanel = new JPanel();
 		dicePanel.setLayout(new FlowLayout());
 		buttonPanel.setLayout(new FlowLayout());
+		roundInfoPanel.setLayout(new BorderLayout());
 		
 		scorePanel = new ScorePanel();
 		
@@ -62,6 +71,15 @@ public class SelectScorePanel extends MyPanel
 			dicePanel.add(dicevalues[i]);
 		}
 		
+		
+		activePlayerLable = new JLabel(playerString);
+		roundScoreLable = new JLabel(roundString);
+		rollScoreLable = new JLabel(rollString);
+		
+		roundInfoPanel.add(activePlayerLable, BorderLayout.NORTH);
+		roundInfoPanel.add(roundScoreLable, BorderLayout.CENTER);
+		roundInfoPanel.add(rollScoreLable, BorderLayout.SOUTH);
+		
 		buttonPanel.add(continueButton);
 		buttonPanel.add(doneButton);
 		buttonPanel.add(restartButton);
@@ -69,8 +87,9 @@ public class SelectScorePanel extends MyPanel
 		setLayout(new BorderLayout());
 		
 		add(scorePanel, BorderLayout.NORTH);
-		add(dicePanel, BorderLayout.CENTER);
+		add(dicePanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
+		add(roundInfoPanel, BorderLayout.WEST);
 	}
 	
 	@Override
@@ -141,7 +160,7 @@ public class SelectScorePanel extends MyPanel
 					callback.UnselectDie(i);
 				
 				continueButton.setEnabled(callback.CanContinue());
-				
+				rollScoreLable.setText(rollString + callback.GetRollScore());
 			}
 		}
 	}
@@ -169,6 +188,11 @@ public class SelectScorePanel extends MyPanel
 		if (!CheckCallback())
 			return;
 		UpdateDice();
+		
+		activePlayerLable.setText(playerString + callback.GetActivePlayer()[0]);
+		roundScoreLable.setText(roundString + callback.GetRoundScore());
+		rollScoreLable.setText(rollString + callback.GetRollScore());
+		
 		continueButton.setEnabled(false);
 		scorePanel.UpdateData();
 	}
