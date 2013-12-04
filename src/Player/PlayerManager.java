@@ -2,7 +2,7 @@ package Player;
 
 import java.util.ArrayList;
 
-public class PlayerManager 
+public class PlayerManager implements PlayerManager_Interface
 {
 
 	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI", "Clever AI", "Random AI"};

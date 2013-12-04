@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
 
-public class DiceManager 
+public class DiceManager implements DiceManager_Interface
 {
 	public static final int NUMDICE = 6;
 	

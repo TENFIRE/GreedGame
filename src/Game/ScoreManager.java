@@ -2,7 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 
-public class ScoreManager 
+public class ScoreManager implements ScoreManager_Interface
 {
 	int score;
 	public ScoreManager()
