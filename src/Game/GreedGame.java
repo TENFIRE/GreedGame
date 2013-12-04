@@ -5,15 +5,16 @@ import GUI.GUI_Interface;
 import GUI.GUI_Interface.GUIState;
 import GameState.*;
 import Player.PlayerManager;
+import Player.PlayerManager_Interface;
 
 import java.util.ArrayList;
 
 public class GreedGame implements GUI_Callback
 {
 
-	DiceManager dManager;
-	ScoreManager sManager;
-	PlayerManager pManager;
+	DiceManager_Interface dManager;
+	ScoreManager_Interface sManager;
+	PlayerManager_Interface pManager;
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 
