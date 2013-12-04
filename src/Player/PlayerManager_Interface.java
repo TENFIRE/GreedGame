@@ -6,13 +6,13 @@ public interface PlayerManager_Interface
 	
 	public boolean IsAI(int index);
 	
+	public boolean AIContinue(int index, int roundScore, int leadDif, float scorePercent, boolean newRoll);
+	
 	public boolean Contains(String name, String type);
 	
 	public boolean AddPlayer(String name, String type);
 	
 	public boolean RemovePlayer(String name, String type);
-	
-	public int[] SelectScore(int index);
 	
 	public String[][] GetPlayerData();
 	
@@ -23,4 +23,15 @@ public interface PlayerManager_Interface
 	public int GetNumberOfPlayers();
 	
 	public void AddScore(int index, int score);
+	
+	public int GetScore(int index);
+	
+	public String GetName(int index);
+	
+	public String GetType(int index);
+	
+	public int GetWinner(int scoreLimit);
+	
+	public int GetLeadDiff(int index);
+	
 }

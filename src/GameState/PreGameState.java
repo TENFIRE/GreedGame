@@ -3,6 +3,7 @@ package GameState;
 import GUI.GUI_Interface;
 import GUI.GUI_Interface.GUIState;
 import Game.GreedGame;
+import Player.PlayerManager_Interface;
 
 public class PreGameState implements GameState_Interface
 {
@@ -22,7 +23,7 @@ public class PreGameState implements GameState_Interface
 	}
 
 	@Override
-	public boolean CanDone() {
+	public boolean CanDone(GreedGame game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -40,7 +41,7 @@ public class PreGameState implements GameState_Interface
 	}
 
 	@Override
-	public boolean CanContinue() {
+	public boolean CanContinue(GreedGame game) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -50,6 +51,18 @@ public class PreGameState implements GameState_Interface
 	{
 		// TODO Auto-generated method stub
 		game.SetGUIState(GUIState.PreGame);
+	}
+
+	@Override
+	public boolean CanSkipAI() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void Roll(GreedGame game) {
+		// TODO Auto-generated method stub
+		game.Roll();
 	}
 
 

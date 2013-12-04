@@ -2,6 +2,7 @@ package GameState;
 
 import GUI.GUI_Interface;
 import Game.GreedGame;
+import Player.PlayerManager_Interface;
 
 
 public interface GameState_Interface
@@ -12,36 +13,16 @@ public interface GameState_Interface
 	
 	public boolean CanRoll();
 	
-	public boolean CanContinue();
+	public boolean CanContinue(GreedGame game);
 	
-	public boolean CanDone();
+	public boolean CanDone(GreedGame game);
 	
 	public boolean CanRestart();
 	
 	public boolean CanStartGame();
 	
-	//Pre Game -> waiting for move
-	//GUI callback to GreedGame.AddPlayer
-	//GUI callback to GreedGame.Start
+	public boolean CanSkipAI();
 	
-	//Waiting for move -> Executing move
-	//if (move = player.getnextmove() != null)
-	//	if (move.getselecteddices != 0)
-	//		executemove
-	//	else nextplayer
-	
-	//Executing move -> post game / Waiting
-	//if busted
-	//	bust player, next player
-	//else
-	//  
-	
-	//SelectScore
-	//if (d = player.getselecteddices != 0)
-	// selectscore(d)
-	// wait for move
-	// 
-	
-	//Post Game -> Pre Game
-	//Gui callback to GreedGame.Reset
+	public void Roll(GreedGame game);
+
 }

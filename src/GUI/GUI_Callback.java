@@ -6,13 +6,21 @@ public interface GUI_Callback
 	public void Done();
 	public void Restart();
 	public void SkipAI();
+	public boolean AIContinue(int index);
 	
 	public void StartGame();
 	
 	public int GetWinnerIndex();
-	public String[][] GetPlayerData();
-	
+	public String[][] GetPlayerData();	
 	public String[] GetActivePlayer();
+	public int GetActivePlayerIndex();
+	
+	public String GetPlayerName(int index);
+	public String GetPlayerType(int index);
+	public int GetPlayerScore(int index);
+	
+	public boolean AddPlayer(String name, String type);
+	public void RemovePlayer(String name, String type);
 	
 	public boolean IsDieSelected(int index);
 	public boolean IsDieLocked(int index);
@@ -30,6 +38,5 @@ public interface GUI_Callback
 	
 	public String[] GetTypes();
 	
-	public boolean AddPlayer(String name, String type);
-	public void RemovePlayer(String name, String type);
+	
 }

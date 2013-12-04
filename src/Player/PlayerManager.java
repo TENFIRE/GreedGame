@@ -2,6 +2,8 @@ package Player;
 
 import java.util.ArrayList;
 
+import javax.lang.model.element.NestingKind;
+
 public class PlayerManager implements PlayerManager_Interface
 {
 
@@ -41,10 +43,24 @@ public class PlayerManager implements PlayerManager_Interface
 	public boolean IsAI(int index)
 	{
 		if (CheckIndex(index))
-			return false;
-		
-		return !playerList.get(index).GetType().equals(playerTypes[0]);
+			return !playerList.get(index).GetType().equals(playerTypes[0]);
+		return false;	
 	}
+	
+	@Override
+	public boolean AIContinue(int index, int roundScore, int leadDif, float scorePercent, boolean newRoll) 
+	{
+		// TODO Auto-generated method stub
+		if (IsAI(index))
+		{
+			AI_Interface ai = GetAI(playerList.get(index).GetType());
+			if (ai != null)
+				return ai.Continue(roundScore, leadDif, scorePercent, newRoll);
+		}
+		return false;
+	}
+
+	
 	@Override
 	public boolean Contains(String name, String type)
 	{
@@ -79,15 +95,7 @@ public class PlayerManager implements PlayerManager_Interface
 		}
 		return false;
 	}
-	@Override
-	public int[] SelectScore(int index)
-	{
-		//no dice = Done
-		AI_Interface ai = GetAI(playerList.get(index).GetType());
-		if (ai == null)
-			return null;
-		return null;
-	}
+
 	@Override
 	public String[][] GetPlayerData()
 	{
@@ -143,5 +151,79 @@ public class PlayerManager implements PlayerManager_Interface
 		}
 	}
 
+	@Override
+	public int GetScore(int index) 
+	{
+		// TODO Auto-generated method stub
+		if (CheckIndex(index))
+			return playerList.get(index).GetScore();
+		return 0;
+	}
 
+	@Override
+	public String GetName(int index)
+	{
+		// TODO Auto-generated method stub
+		if (CheckIndex(index))
+			return playerList.get(index).GetName();
+		return "";
+	}
+
+	@Override
+	public String GetType(int index)
+	{
+		// TODO Auto-generated method stub
+		if (CheckIndex(index))
+			return playerList.get(index).GetType();
+		return "";
+	}
+
+	@Override
+	public int GetWinner(int scoreLimit) {
+		// TODO Auto-generated method stub
+		int bestIndex = GetBestScoreExcept(-1);
+		
+		if (bestIndex > 0)
+		{
+			int bestScore = GetScore(bestIndex);
+			if (bestScore >= scoreLimit)
+				return bestIndex;
+		}
+		return -1;
+	}
+	
+	private int GetBestScoreExcept(int exception)
+	{
+		int best = -1;
+		int highScore = 0;
+		for (int i = 0; i < playerList.size(); i++)
+		{
+			if (i != exception)
+			{
+				int playerScore = playerList.get(i).GetScore();
+				if (playerScore > highScore)
+				{
+					best = i;
+					highScore = playerScore;
+				}
+			}
+		}
+		return best;
+	}
+
+	@Override
+	public int GetLeadDiff(int index) {
+		// TODO Auto-generated method stub
+		if (CheckIndex(index))
+		{
+			int bestIndex = GetBestScoreExcept(index);
+			
+			if (bestIndex > 0)
+			{
+				int bestScore = GetScore(bestIndex);
+				return bestScore - GetScore(index);
+			}		
+		}
+		return 0;
+	}
 }

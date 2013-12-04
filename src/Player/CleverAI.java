@@ -9,7 +9,7 @@ public class CleverAI implements AI_Interface
 	}
 	
 	@Override
-	public boolean Continue(int roundScore, int leadDiff, float scorePercent) 
+	public boolean Continue(int roundScore, int leadDiff, float scorePercent, boolean newRoll) 
 	{
 		// TODO Auto-generated method stub
 		float roundScoreTerm = roundScore * -10; //-300 to - 9999

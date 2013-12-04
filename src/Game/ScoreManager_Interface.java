@@ -8,7 +8,7 @@ public interface ScoreManager_Interface
 	
 	public int GetScore();
 	
-	public float GetScorePercentage(int numDices);
+	public float GetScorePercent(int numDices);
 	
 	public int[] SelectBestScore(int[] values);
 	

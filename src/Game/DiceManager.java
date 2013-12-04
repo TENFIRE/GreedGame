@@ -83,6 +83,56 @@ public class DiceManager implements DiceManager_Interface
 			selectedDice.add(index);
 		}
 	}
+	
+	@Override
+	public boolean SelectValues(int[] values)
+	{
+		int found = 0;
+		int[] temp = values;
+		for (int i = 0; i < dice.length; i++)
+		{
+			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			{
+				int diceValue = dice[i].GetValue();
+				for (int j = 0; j < temp.length; j++)
+				{
+					if (temp[j] == diceValue)
+					{
+						temp[j] = -1;
+						break;
+					}
+				}
+			}
+		}
+		
+		for (int i = 0; i < temp.length; i++)
+		{
+			if (temp[i] != -1)
+				return false;
+		}
+		
+		temp = values;
+		for (int i = 0; i < dice.length; i++)
+		{
+			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			{
+				int diceValue = dice[i].GetValue();
+				for (int j = 0; j < temp.length; j++)
+				{
+					if (temp[j] == diceValue)
+					{
+						temp[j] = -1;
+						SelectDie(i);
+						break;
+					}
+				}
+			}
+		}
+		
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	@Override
 	public void UnselectDie(int index)
 	{
@@ -136,6 +186,29 @@ public class DiceManager implements DiceManager_Interface
 	}
 
 	@Override
+	public int[] GetFreeValues() 
+	{
+		// TODO Auto-generated method stub
+		int numFreeDice = dice.length - (selectedDice.size() + lockedDice.size());
+		int[] freeVal = new int[numFreeDice];
+		
+		int k = 0;
+		for (int i = 0; i < dice.length; i++)
+		{
+			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			{
+				if (k < freeVal.length)
+				{
+					freeVal[k] = GetValue(i);
+					k++;
+				}
+			}
+		}
+		
+		return freeVal;
+	}
+
+	@Override
 	public boolean IsAllLocked() 
 	{
 		// TODO Auto-generated method stub
@@ -144,4 +217,19 @@ public class DiceManager implements DiceManager_Interface
 				return false;
 		return true;
 	}
+
+	@Override
+	public int GetNumberOfSelectedDice() {
+		// TODO Auto-generated method stub
+		return lockedDice.size();
+	}
+
+	@Override
+	public int GetNumberOfLockedDice() {
+		// TODO Auto-generated method stub
+		return selectedDice.size();
+	}
+
+
+
 }

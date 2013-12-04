@@ -6,13 +6,16 @@ public interface DiceManager_Interface
 	
 	public int[] GetSelectedValues();
 	
+	public int[] GetFreeValues();
+	
+	public boolean SelectValues(int[] values);
+	
 	public void LockAndRoll();
 	
-	/*
-	public void LockDie(int index);
+	public int GetNumberOfSelectedDice();
 	
-	public void UnlockDie(int index);
-	*/
+	public int GetNumberOfLockedDice();
+	
 	public void SelectDie(int index);
 	
 	public void UnselectDie(int index);

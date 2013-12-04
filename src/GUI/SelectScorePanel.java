@@ -3,6 +3,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -12,18 +13,18 @@ import javax.swing.JPanel;
 public class SelectScorePanel extends MyPanel
 {
 
-	private JButton doneButton;
-	private JButton continueButton;
-	private JButton restartButton;
+	protected JButton doneButton;
+	protected JButton continueButton;
+	protected JButton restartButton;
 	
 	private JPanel dicePanel;
-	private JPanel buttonPanel;
+	protected JPanel buttonPanel;
 	private JPanel roundInfoPanel;
 	
 	private ScorePanel scorePanel;
 	
-	private JCheckBox diceboxes[];
-	private JLabel dicevalues[];
+	protected JCheckBox diceboxes[];
+	protected JLabel dicevalues[];
 	
 	private JLabel activePlayerLable, roundScoreLable, rollScoreLable;
 	
@@ -45,15 +46,12 @@ public class SelectScorePanel extends MyPanel
 		
 		doneButton = new JButton("Done");
 		doneButton.setVisible(true);
-		doneButton.addActionListener(this);
 		
 		continueButton = new JButton("Continue");
 		continueButton.setVisible(true);
-		continueButton.addActionListener(this);
 		
 		restartButton = new JButton("Restart");
 		restartButton.setVisible(true);
-		restartButton.addActionListener(this);
 		
 		diceboxes = new JCheckBox[6];
 		dicevalues = new JLabel[6];
@@ -62,7 +60,6 @@ public class SelectScorePanel extends MyPanel
 		{
 			diceboxes[i] = new JCheckBox();
 			diceboxes[i].setVisible(true);
-			diceboxes[i].addActionListener(this);
 			
 			dicevalues[i] = new JLabel();
 			dicevalues[i].setVisible(true);
@@ -90,6 +87,25 @@ public class SelectScorePanel extends MyPanel
 		add(dicePanel, BorderLayout.EAST);
 		add(buttonPanel, BorderLayout.SOUTH);
 		add(roundInfoPanel, BorderLayout.WEST);
+	}
+	
+	protected void SetActionListener(ActionListener l)
+	{
+		doneButton.removeActionListener(this);
+		continueButton.removeActionListener(this);
+		restartButton.removeActionListener(this);
+		for (int i = 0; i < 6; i++)
+		{
+			diceboxes[i].removeActionListener(this);
+		}
+		
+		doneButton.addActionListener(l);
+		continueButton.addActionListener(l);
+		restartButton.addActionListener(l);
+		for (int i = 0; i < 6; i++)
+		{
+			diceboxes[i].addActionListener(l);
+		}
 	}
 	
 	@Override
@@ -165,7 +181,7 @@ public class SelectScorePanel extends MyPanel
 		}
 	}
 	
-	private void UpdateDice()
+	protected void UpdateDice()
 	{
 		if (!CheckCallback())
 			return;

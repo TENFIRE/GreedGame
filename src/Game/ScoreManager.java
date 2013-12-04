@@ -134,11 +134,13 @@ public class ScoreManager implements ScoreManager_Interface
 		return score;
 	}
 	@Override
-	public float GetScorePercentage(int numDices)
+	public float GetScorePercent(int numDices)
 	{
 		//http://giantbattlingrobots.blogspot.se/2009/10/farkle-probabilities.html
 		switch (numDices) 
 		{
+		case 0:
+			return 0.9769f;
 		case 1:
 			return 0.3333f;
 		case 2:
