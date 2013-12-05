@@ -45,7 +45,7 @@ public class PlayerInfo
 		return score;
 	}
 
-	public void SsetScore(int score) 
+	public void SetScore(int score) 
 	{
 		this.score = score;
 	}

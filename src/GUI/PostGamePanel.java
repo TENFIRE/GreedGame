@@ -24,6 +24,7 @@ public class PostGamePanel extends MyPanel {
 	
 	private JPanel buttonPanel;
 	private JPanel winnerPanel;
+	private ScorePanel scorePanel;
 	
 	public PostGamePanel()
 	{
@@ -32,6 +33,8 @@ public class PostGamePanel extends MyPanel {
 		
 		winnerPanel = new JPanel();
 		winnerPanel.setLayout(new FlowLayout());
+		
+		scorePanel = new ScorePanel();
 		
 		restartButton = new JButton("Restart");
 		restartButton.setVisible(true);
@@ -45,15 +48,27 @@ public class PostGamePanel extends MyPanel {
 		winnerPanel.add(winnerLabel);
 		
 		setLayout(new BorderLayout());
-		add(winnerPanel, BorderLayout.NORTH);
+		add(scorePanel, BorderLayout.NORTH);
+		add(winnerPanel, BorderLayout.CENTER);
 		add(buttonPanel, BorderLayout.SOUTH);
+	}
+	
+	@Override
+	public void SetCallback(GUI_Callback callback) 
+	{
+		super.SetCallback(callback);
+		scorePanel.SetCallback(callback);
 	}
 	
 	@Override
 	public void UpdateData() 
 	{
 		// TODO Auto-generated method stub
-		
+		int winnerIndex = callback.GetWinnerIndex();
+		String winner = callback.GetPlayerName(winnerIndex);
+		String type = callback.GetPlayerType(winnerIndex);
+		winnerLabel.setText("The winner is " + winner +" (" + type + ")");
+		scorePanel.UpdateData();
 	}
 	
 	@Override
@@ -63,11 +78,10 @@ public class PostGamePanel extends MyPanel {
 		{
 			if (!CheckCallback())
 				return;
-			winnerLabel.setText(GetWinner());
 			callback.Restart();
 		}
 	}
-	
+/*	
 	private String GetWinner()
 	{
 		if (!CheckCallback())
@@ -93,5 +107,5 @@ public class PostGamePanel extends MyPanel {
 		return "Winner nr: " + winner;
 		
 	}
-
+*/
 }

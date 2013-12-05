@@ -16,10 +16,12 @@ public class AIPanel extends SelectScorePanel
 	
 	public AIPanel()
 	{
-		skipAIButton = new JButton("Restart");
+		skipAIButton = new JButton("Skip AI");
 		skipAIButton.setVisible(true);
 		skipAIButton.addActionListener(this);
-
+		
+		buttonPanel.add(skipAIButton);
+		
 		SetActionListener(this);
 	}
 	
@@ -30,14 +32,14 @@ public class AIPanel extends SelectScorePanel
 		{
 			if (arg0.getSource() == diceboxes[i])
 			{
-				diceboxes[i].setSelected(!diceboxes[i].isSelected());
+				UpdateData();
 				return;
 			}
 		}		
 
 		if (arg0.getSource() == skipAIButton)
 		{
-			
+			System.out.println("Pressed Skip AI");
 		}
 		else
 		{
@@ -47,19 +49,12 @@ public class AIPanel extends SelectScorePanel
 	}
 	
 	@Override
-	protected void UpdateDice()
+	public void UpdateData()
 	{
+		super.UpdateData();
 		if (!CheckCallback())
 			return;
-		int[] dice = callback.GetDice();
-		
-		for (int i = 0; i < 6; i++)
-		{			
-			diceboxes[i].setEnabled(!callback.IsDieLocked(i));	
-			diceboxes[i].setSelected(!callback.IsDieSelected(i));
-			
-			dicevalues[i].setText(Integer.toString(dice[i]));
-		}
+		skipAIButton.setEnabled(callback.CanSkipAI());
 	}
 
 }

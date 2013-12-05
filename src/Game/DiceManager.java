@@ -46,7 +46,7 @@ public class DiceManager implements DiceManager_Interface
 		{
 			if (!lockedDice.contains(i))
 			{
-				System.out.println("Rolled: " + i);
+				//System.out.println("Rolled: " + i);
 				dice[i].Roll();
 			}
 		}
@@ -87,8 +87,12 @@ public class DiceManager implements DiceManager_Interface
 	@Override
 	public boolean SelectValues(int[] values)
 	{
-		int found = 0;
-		int[] temp = values;
+		//int[] temp = values;
+		int[] temp = new int[values.length];
+		
+		System.arraycopy(values, 0, temp, 0, values.length);
+		
+		
 		for (int i = 0; i < dice.length; i++)
 		{
 			if (!selectedDice.contains(i) && !selectedDice.contains(i))
@@ -111,7 +115,7 @@ public class DiceManager implements DiceManager_Interface
 				return false;
 		}
 		
-		temp = values;
+		System.arraycopy(values, 0, temp, 0, values.length);
 		for (int i = 0; i < dice.length; i++)
 		{
 			if (!selectedDice.contains(i) && !selectedDice.contains(i))

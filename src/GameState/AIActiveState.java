@@ -41,7 +41,7 @@ public class AIActiveState implements GameState_Interface
 	{
 		// TODO Auto-generated method stub
 		int index = game.GetActivePlayerIndex();
-		return !game.AIContinue(index);
+		return game.IsBusted() || !game.AIContinue(index);
 	}
 
 	@Override

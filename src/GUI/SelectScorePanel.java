@@ -81,6 +81,8 @@ public class SelectScorePanel extends MyPanel
 		buttonPanel.add(doneButton);
 		buttonPanel.add(restartButton);
 		
+		SetActionListener(this);
+		
 		setLayout(new BorderLayout());
 		
 		add(scorePanel, BorderLayout.NORTH);
@@ -170,13 +172,12 @@ public class SelectScorePanel extends MyPanel
 				if (!CheckCallback())
 					return;
 				
-				if (diceboxes[i].isSelected())
-					callback.SelectDie(i);
-				else
+				if (callback.IsDieSelected(i))
 					callback.UnselectDie(i);
+				else
+					callback.SelectDie(i);
 				
-				continueButton.setEnabled(callback.CanContinue());
-				rollScoreLable.setText(rollString + callback.GetRollScore());
+				UpdateData();
 			}
 		}
 	}
@@ -190,7 +191,7 @@ public class SelectScorePanel extends MyPanel
 		for (int i = 0; i < 6; i++)
 		{			
 			diceboxes[i].setEnabled(!callback.IsDieLocked(i));	
-			diceboxes[i].setSelected(false);
+			diceboxes[i].setSelected(callback.IsDieSelected(i));
 			
 			dicevalues[i].setText(Integer.toString(dice[i]));
 		}
@@ -209,7 +210,8 @@ public class SelectScorePanel extends MyPanel
 		roundScoreLable.setText(roundString + callback.GetRoundScore());
 		rollScoreLable.setText(rollString + callback.GetRollScore());
 		
-		continueButton.setEnabled(false);
+		continueButton.setEnabled(callback.CanContinue());
+		doneButton.setEnabled(callback.CanDone());
 		scorePanel.UpdateData();
 	}
 

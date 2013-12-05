@@ -183,7 +183,7 @@ public class PlayerManager implements PlayerManager_Interface
 		// TODO Auto-generated method stub
 		int bestIndex = GetBestScoreExcept(-1);
 		
-		if (bestIndex > 0)
+		if (bestIndex >= 0)
 		{
 			int bestScore = GetScore(bestIndex);
 			if (bestScore >= scoreLimit)
@@ -225,5 +225,12 @@ public class PlayerManager implements PlayerManager_Interface
 			}		
 		}
 		return 0;
+	}
+
+	@Override
+	public void Reset() 
+	{
+		for (int i = 0; i < playerList.size(); i++)
+			playerList.get(i).SetScore(0);
 	}
 }

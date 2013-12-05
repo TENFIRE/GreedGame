@@ -67,6 +67,7 @@ public class GUI extends JFrame implements GUI_Interface
 		default:
 			break;
 		}
+		System.out.println("Panel: " + panel.getClass().toString());
 		add(panel);
 		panel.SetCallback(callback);
 		panel.UpdateData();

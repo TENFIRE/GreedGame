@@ -61,9 +61,9 @@ public class GreedGame implements GUI_Callback
 	public void Done() 
 	{
 		// TODO Auto-generated method stub
-		if (gameState.CanDone(this))
+		if (CanDone())
 		{
-			if (CanContinue()) //only add points if not busted
+			if (!IsBusted()) //only add points if not busted
 			{
 				sManager.AddScore(dManager.GetSelectedValues());
 				pManager.AddScore(activePlayer, sManager.GetScore());
@@ -156,6 +156,7 @@ public class GreedGame implements GUI_Callback
 		{
 			//Reset
 			activePlayer = 0;
+			pManager.Reset();
 			dManager.Reset();
 			sManager.Reset();
 			
@@ -239,20 +240,24 @@ public class GreedGame implements GUI_Callback
 		dManager.UnlockDie(index);
 	}
 */
+	public boolean IsBusted()
+	{
+		int[] values = dManager.GetSelectedValues();
+		int roundScore = sManager.GetScore();
+		int rollScore = sManager.GetScore(values);
+		
+		if (roundScore == 0)
+			return rollScore < BustLimit;
+		return rollScore <= 0;
+	}
+	
 	@Override
 	public boolean CanContinue() 
 	{
 		// TODO Auto-generated method stub	
 		if (gameState.CanContinue(this))
 		{
-			int[] values = dManager.GetSelectedValues();
-			int roundScore = sManager.GetScore();
-			int rollScore = sManager.GetScore(values);
-			
-			if (roundScore == 0)
-				return rollScore >= BustLimit;
-			return rollScore > 0;
-			
+			return !IsBusted();
 		}
 		return false;
 	}
@@ -309,13 +314,15 @@ public class GreedGame implements GUI_Callback
 			selectedValues[i] = values[indices[i]];
 		
 		dManager.SelectValues(selectedValues);
+		
+		gui.UpdateData();
 	}
 
 	@Override
 	public void SkipAI() 
 	{
 		// TODO Auto-generated method stub
-		if (gameState.CanSkipAI())
+		if (CanSkipAI())
 		{
 			while (pManager.IsAI(activePlayer))
 			{
@@ -374,6 +381,13 @@ public class GreedGame implements GUI_Callback
 	{
 		// TODO Auto-generated method stub
 		return activePlayer;
+	}
+
+	@Override
+	public boolean CanSkipAI() 
+	{
+		// TODO Auto-generated method stub
+		return gameState.CanSkipAI();
 	}
 
 

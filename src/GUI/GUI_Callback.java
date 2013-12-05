@@ -28,6 +28,7 @@ public interface GUI_Callback
 	
 	public boolean CanContinue();
 	public boolean CanDone();
+	public boolean CanSkipAI();
 	
 	//public int GetScore();
 	public int GetRoundScore();

@@ -33,5 +33,7 @@ public interface PlayerManager_Interface
 	public int GetWinner(int scoreLimit);
 	
 	public int GetLeadDiff(int index);
+
+	public void Reset();
 	
 }
