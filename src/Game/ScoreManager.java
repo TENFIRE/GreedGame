@@ -2,16 +2,27 @@ package Game;
 
 import java.util.ArrayList;
 
+class ValuesAndScore
+{
+	public int[] values;
+	public int score;
+};
+
 public class ScoreManager implements ScoreManager_Interface
 {
-	int score;
+	private int score;
+	
 	public ScoreManager()
 	{
 		score = 0;
 	}
 	
-	private int GetThreeOfAKind(int[] values)
+	private ValuesAndScore GetTripple(int[] values)
 	{
+		ValuesAndScore result = new ValuesAndScore();
+		result.score = 0;
+		result.values = values;
+		
 		int[] count = new int[6];
 		
 		for (int i = 0; i < 6; i++)
@@ -22,42 +33,55 @@ public class ScoreManager implements ScoreManager_Interface
 			count[values[i] - 1]++;
 		}
 		
-		int score = 0;
 		for (int i = 0; i < 6; i++)
 		{
 			if (count[i] >= 3)
 			{
 				if (i == 0)
-					score += 1000 * (count[i] / 3);
+					result.score += 1000 * (count[i] / 3);
 				else
-					score += (i + 1) * 100 * (count[i] / 3);
+					result.score += (i + 1) * 100 * (count[i] / 3);
 			}
 		}
-		return score;
+		
+		result.values = RemoveTrippleValues(values);
+		
+		return result;
 	}
 	
-	private int GetSingles(int[] values)
+	private ValuesAndScore GetSingles(int[] values)
 	{
-		int score = 0;
+		ValuesAndScore result = new ValuesAndScore();
+		result.score = 0;
+		result.values = values;
+		
 		for (int i = 0; i < values.length; i++)
 		{
 			switch (values[i]) 
 			{
 			case 1:
-				score += 100;
+				result.score += 100;
 				break;
 			case 5:
-				score += 50;
+				result.score += 50;
 				break;
 			default:
 				break;
 			}
 		}
-		return score;
+		
+		result.values = RemoveSinglesValues(values);
+		
+		return result;
 	}
 	
-	private int GetStreet(int[] values)
+	private ValuesAndScore GetStreet(int[] values)
 	{
+		ValuesAndScore result = new ValuesAndScore();
+		result.score = 0;
+		result.values = values;
+		
+		
 		int[] count = new int[6];
 		
 		for (int i = 0; i < 6; i++)
@@ -70,57 +94,32 @@ public class ScoreManager implements ScoreManager_Interface
 		
 		for (int i = 0; i < 6; i++)
 		{
-			if (count[i] != 1)
-				return 0;
+			if (count[i] < 1)
+				return result;
 		}
-		return 1000;
+		result.values = RemoveStreetValues(values);
+		result.score = 1000;
+		return result;
 	}
-	
-	private ArrayList<Integer> GetSingleDice(int[] values)
-	{
-		ArrayList<Integer> dice = new ArrayList<Integer>();
-		for (int i = 0; i < values.length; i++)
-		{
-			if (values[i] == 1 || values[i] == 5) 
-				dice.add(i);
-		}
-		return dice;
-	}
-	
-	private ArrayList<Integer> GetTippleDice(int[] values)
-	{
-		ArrayList<Integer> dice = new ArrayList<Integer>();
-		for (int i = 0; i < 6; i++)
-		{
-			ArrayList<Integer> temp = new ArrayList<Integer>();
-			for (int j = 0; j < values.length; j++)
-			{
-				if (values[j] == i)
-					temp.add(j);
-			}
-			if (temp.size() > 3)
-			{
-				for (int j = 0; j < 3 * (temp.size() / 3); j++)
-				{
-					dice.add(temp.get(j));
-				}
-			}
-		}
-		return dice;
-	}
+
 	@Override
 	public int GetScore(int[] values)
 	{
-		int score = GetStreet(values);	//Prio 1 Highest score except 6 ones (can't happen at the same time)
+		ValuesAndScore temp = GetStreet(values);	//Prio 1 Highest score except 6 ones (can't happen at the same time)
+		int score = temp.score;
+		values = temp.values;
 		
-		score += GetThreeOfAKind(values);	//Prio 2 Always better to get three of a kind instead of counting them as three singles.
+		temp = GetTripple(values);	//Prio 2 Always better to get three of a kind instead of counting them as three singles.
+		score += temp.score;
+		values = temp.values;
 		
-		//Only count non used dice when getting singles.
-		ArrayList<Integer> trippleIndex = GetTippleDice(values);			
-		int[] restValues = RemoveTrippleIndex(values, trippleIndex);	
+		temp = GetSingles(values);	//Prio 3
+		score += temp.score;
+		values = temp.values;
 		
-		score += GetSingles(restValues);	//Prio 3
-			
+		if (values.length > 0)
+			return 0;
+		
 		return score;
 	}
 	@Override
@@ -159,52 +158,133 @@ public class ScoreManager implements ScoreManager_Interface
 		return 0;
 	}
 	
-	private int[] RemoveTrippleIndex(int[] values, ArrayList<Integer> trippleIndex)
+	private int[] RemoveSinglesValues(int[] values)
 	{
-		ArrayList<Integer> restIndex = new ArrayList<Integer>();
+		int[] result;
+		
+		ArrayList<Integer> dice = new ArrayList<Integer>();
+		for (int i = 0; i < values.length; i++)
+		{
+			if (values[i] != 1 && values[i] != 5)
+				dice.add(values[i]);
+		}
+		
+		result = new int[dice.size()];
+		
+		for (int i = 0; i < result.length; i++)
+			result[i] = dice.get(i);
+		
+		return result;
+	}
+	
+	private int[] RemoveStreetValues(int[] values)
+	{
+		int[] count = new int[6];
+		
+		for (int i = 0; i < 6; i++)
+			count[i] = 0;
 		
 		for (int i = 0; i < values.length; i++)
 		{
-			restIndex.add(i);
+			count[values[i]-1]++;
 		}
 		
-		for (int i = 0; i < trippleIndex.size(); i++)
+		for (int i = 0; i < 6; i++)
 		{
-			restIndex.remove((Object)trippleIndex.get(i));
+			if (count[i] < 1)
+				return values;
 		}
 		
-		int[] newValues = new int[restIndex.size()];
+		int[] newValues = new int[values.length - 6];
 		
-		for (int i = 0; i < newValues.length; i++)
-			newValues[i] = values[restIndex.get(i)];
+		int k = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			boolean foundOne = false;
+			for (int j = 0; j < values.length; j++)
+				if (i == values[j])
+				{
+					if (foundOne)
+						newValues[k] = i;
+					foundOne = true;
+				}
+		}
+		return newValues;
+	}
+	
+	private int[] RemoveTrippleValues(int[] values)
+	{
+		ArrayList<Integer> restIndex = new ArrayList<Integer>();
 		
+		int[] count = new int[6];
+		
+		for (int i = 0; i < 6; i++)
+			count[i] = 0;
+		
+		for (int i = 0; i < values.length; i++)
+		{
+			count[values[i] - 1]++;
+		}
+		
+		int temp = 0;
+		for (int i = 0; i < count.length; i++)
+		{
+			temp += count[i] % 3;
+		}
+		
+		int[] newValues = new int[temp];
+		
+		int k = 0;
+		for (int i = 0; i < count.length; i++)
+		{
+			for (int j = 0; j < count[i] % 3; j++)
+			{
+				newValues[k] = i + 1;
+				k++;
+			}		
+		}
 		return newValues;
 	}
 	@Override
 	public int[] SelectBestScore(int[] values)
 	{
-		int[] dice = null;
-		if (GetStreet(values) > 0)
+		int[] temp = new int[values.length];
+		System.arraycopy(values, 0, temp, 0, values.length);
+		
+		temp = RemoveStreetValues(temp);
+		temp = RemoveTrippleValues(temp);
+		temp = RemoveSinglesValues(temp);
+		
+		int[] count = new int[6];		
+		for (int i = 0; i < 6; i++)
+			count[i] = 0;
+		
+		for (int i = 0; i < values.length; i++)
 		{
-			dice = new int[6];
-			for (int i = 0; i < 6; i++)
-				dice[i] = i;
+			count[values[i] - 1]++;
 		}
-		else
+		for (int i = 0; i < temp.length; i++)
 		{
-			ArrayList<Integer> trippleIndex = GetTippleDice(values);
-			
-			int[] restValues = RemoveTrippleIndex(values, trippleIndex);
-
-			trippleIndex.addAll(GetSingleDice(restValues));
-			
-			dice = new int[trippleIndex.size()];
-			
-			for (int i = 0; i < dice.length; i++)
-				dice[i] = trippleIndex.get(i);
+			count[temp[i] - 1]--;
 		}
 		
-		return dice;
+		int numDice = 0;
+		for (int i = 0; i < count.length; i++)
+		{
+			numDice += count[i];
+		}
+		
+		int[] bestScore = new int[numDice];
+		int k = 0;
+		for (int i = 0; i < count.length; i++)
+		{
+			for (int j = 0; j < count[i]; j++)
+			{
+				bestScore[k] = i + 1;
+				k++;
+			}
+		}
+		return bestScore;
 	}
 	@Override
 	public void Reset()

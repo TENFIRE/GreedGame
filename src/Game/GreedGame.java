@@ -320,14 +320,9 @@ public class GreedGame implements GUI_Callback
 		dManager.UnselectAll();
 
 		int[] values = dManager.GetFreeValues();
-		int[] indices = sManager.SelectBestScore(values);
-		
-		int[] selectedValues = new int[indices.length];
-		
-		for (int i = 0; i < indices.length; i++)
-			selectedValues[i] = values[indices[i]];
-		
-		dManager.SelectValues(selectedValues);
+		values = sManager.SelectBestScore(values);
+
+		dManager.SelectValues(values);
 		
 		gui.UpdateData();
 	}
