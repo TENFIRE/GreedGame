@@ -73,4 +73,16 @@ public class AIActiveState implements GameState_Interface
 		game.SelectBestScore();
 	}
 
+	@Override
+	public boolean CanSetScoreLimit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean CanSetBustLimit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

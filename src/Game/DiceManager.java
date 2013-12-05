@@ -46,40 +46,16 @@ public class DiceManager implements DiceManager_Interface
 		{
 			if (!lockedDice.contains(i))
 			{
-				//System.out.println("Rolled: " + i);
 				dice[i].Roll();
 			}
 		}
 	}
 
-	
-	/*
-	@Override
-	public void LockDie(int index)
-	{
-		if (!lockedDice.contains(index) && !selectedDice.contains(index) )
-		{
-			System.out.println("Locked: " + index);
-			lockedDice.add(index);
-		}
-	}
-	@Override
-	public void UnlockDie(int index)
-	{
-		if (lockedDice.contains(index) && !selectedDice.contains(index) )
-		{
-			System.out.println("Unlocked: " + index);
-			lockedDice.remove((Object)index);
-		}
-	}
-	*/
-	
 	@Override
 	public void SelectDie(int index)
 	{
 		if (!selectedDice.contains(index) && !lockedDice.contains(index))
 		{
-			System.out.println("Selected: " + index);
 			selectedDice.add(index);
 		}
 	}
@@ -142,7 +118,6 @@ public class DiceManager implements DiceManager_Interface
 	{
 		if (selectedDice.contains(index))
 		{
-			System.out.println("Unselected: " + index);
 			selectedDice.remove((Object)index);
 		}
 	}

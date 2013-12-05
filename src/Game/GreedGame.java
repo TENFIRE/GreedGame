@@ -7,23 +7,24 @@ import GUI.GUI_Interface.GUIState;
 import GameState.*;
 import Player.PlayerManager;
 import Player.PlayerManager_Interface;
+import Player.Player_Callback;
 
 import java.util.ArrayList;
 
-public class GreedGame implements GUI_Callback
+public class GreedGame implements GUI_Callback, Player_Callback
 {
 
-	DiceManager_Interface dManager;
-	ScoreManager_Interface sManager;
-	PlayerManager_Interface pManager;
+	private DiceManager_Interface dManager;
+	private ScoreManager_Interface sManager;
+	private PlayerManager_Interface pManager;
 	private GUI_Interface gui;
 	private GameState_Interface gameState;
 
 	private int activePlayer = 0;
 	private boolean newRoll;
 	
-	private final int ScoreLimit = 10000;
-	private final int BustLimit = 300;
+	private int scoreLimit;
+	private int bustLimit;
 	
 	public GreedGame()
 	{
@@ -32,6 +33,9 @@ public class GreedGame implements GUI_Callback
 	
 	public void Initialize()
 	{
+		scoreLimit = 10000;
+		bustLimit = 300;
+		
 		dManager = new DiceManager();
 		sManager = new ScoreManager();
 		pManager = new PlayerManager();
@@ -69,7 +73,7 @@ public class GreedGame implements GUI_Callback
 				pManager.AddScore(activePlayer, sManager.GetScore());
 			}
 			
-			if (pManager.GetScore(activePlayer) >= ScoreLimit)
+			if (pManager.GetScore(activePlayer) >= scoreLimit)
 				gameState.ChangeState(this, new PostGameState());
 			else
 			{
@@ -112,12 +116,7 @@ public class GreedGame implements GUI_Callback
 	public boolean AIContinue(int index)
 	{
 		// TODO Auto-generated method stub
-		int freeDice = 6 - (dManager.GetNumberOfLockedDice() + dManager.GetNumberOfSelectedDice());
-		int roundScore = GetRoundScore() + GetRollScore();
-		int leadDiff = pManager.GetLeadDiff(activePlayer);
-		float scorePercent = sManager.GetScorePercent(freeDice);
-		
-		boolean result = pManager.AIContinue(index, roundScore, leadDiff, scorePercent, newRoll);
+		boolean result = pManager.AIContinue(index, this);
 		newRoll = false;
 		return result;
 	}
@@ -151,7 +150,7 @@ public class GreedGame implements GUI_Callback
 	public int GetWinnerIndex() 
 	{
 		// TODO Auto-generated method stub
-		return pManager.GetWinner(ScoreLimit);
+		return pManager.GetWinner(scoreLimit);
 	}
 
 	@Override
@@ -261,7 +260,7 @@ public class GreedGame implements GUI_Callback
 		int rollScore = sManager.GetScore(values);
 		
 		if (roundScore == 0)
-			return rollScore < BustLimit;
+			return rollScore < bustLimit;
 		return rollScore <= 0;
 	}
 	
@@ -382,6 +381,81 @@ public class GreedGame implements GUI_Callback
 	{
 		// TODO Auto-generated method stub
 		return gameState.CanSkipAI();
+	}
+
+	@Override
+	public int GetScoreLimit() 
+	{
+		// TODO Auto-generated method stub
+		return scoreLimit;
+	}
+
+	@Override
+	public int GetBustLimit() 
+	{
+		// TODO Auto-generated method stub
+		return bustLimit;
+	}
+
+	@Override
+	public void SetScoreLimit(int limit) 
+	{
+		// TODO Auto-generated method stub
+		if (CanSetScoreLimit() && limit > 0)
+			scoreLimit = limit;
+	}
+
+	@Override
+	public void SetBustLimit(int limit) 
+	{
+		// TODO Auto-generated method stub
+		if (CanSetBustLimit() && limit >= 0)
+			bustLimit = limit;
+	}
+
+	@Override
+	public boolean CanSetScoreLimit()
+	{
+		// TODO Auto-generated method stub
+		return gameState.CanSetScoreLimit();
+	}
+
+	@Override
+	public boolean CanSetBustLimit() 
+	{
+		// TODO Auto-generated method stub
+		return gameState.CanSetBustLimit();
+	}
+
+	@Override
+	public boolean IsNewRoll() {
+		// TODO Auto-generated method stub
+		return newRoll;
+	}
+
+	@Override
+	public int GetTotalScore()
+	{
+		// TODO Auto-generated method stub
+		int old = pManager.GetScore(activePlayer);
+		int round = sManager.GetScore();
+		int roll = sManager.GetScore(dManager.GetSelectedValues());
+		return old + round + roll;
+	}
+
+	@Override
+	public int GetLeadDiff() 
+	{
+		// TODO Auto-generated method stub
+		return pManager.GetLeadDiff(activePlayer);
+	}
+
+	@Override
+	public float GetScorePercent() 
+	{
+		// TODO Auto-generated method stub
+		int freeDice = 6 - (dManager.GetNumberOfLockedDice() + dManager.GetNumberOfSelectedDice());
+		return sManager.GetScorePercent(freeDice);
 	}
 
 

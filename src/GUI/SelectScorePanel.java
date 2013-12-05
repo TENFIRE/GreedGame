@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class SelectScorePanel extends MyPanel
@@ -116,28 +117,16 @@ public class SelectScorePanel extends MyPanel
 		super.SetCallback(callback);
 		scorePanel.SetCallback(callback);
 	}
-	
-	private int[] GetSelectedDice()
+
+	private void Restart()
 	{
-		int length = 0;
-		for (int i = 0; i < 6; i++)
-		{
-			if (diceboxes[i].isSelected())
-				length++;
-		}
+		if (!CheckCallback())
+			return;
 		
-		int[] selectedDice = new int[length];
+		int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to restart the game?");
 		
-		int k = 0;
-		for (int i = 0; i < 6; i++)
-		{
-			if (diceboxes[i].isSelected())
-			{
-				selectedDice[k] = i;
-				k++;
-			}
-		}	
-		return selectedDice;
+		if (choice == 0)
+			callback.Restart();
 	}
 	
 	@Override
@@ -160,9 +149,7 @@ public class SelectScorePanel extends MyPanel
 		
 		else if (arg0.getSource() == restartButton)
 		{
-			if (!CheckCallback())
-				return;
-			callback.Restart();
+			Restart();
 		}
 		
 		for (int i = 0; i < 6; i++)

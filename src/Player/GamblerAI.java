@@ -10,9 +10,15 @@ public class GamblerAI implements AI_Interface
 	}
 
 	@Override
-	public boolean Continue(int roundScore, int leadDif, float scorePercent, boolean newRoll) 
+	public boolean Continue(Player_Callback callback) 
 	{
 		// TODO Auto-generated method stub
+		if (callback == null)
+			return false;
+		
+		if (callback.GetTotalScore() >= callback.GetScoreLimit())
+			return false;
+		
 		return true;
 	}
 	

@@ -1,12 +1,11 @@
 package Player;
 
+
 public interface PlayerManager_Interface 
 {
 	public String[] GetPlayerTypes();	
 	
 	public boolean IsAI(int index);
-	
-	public boolean AIContinue(int index, int roundScore, int leadDif, float scorePercent, boolean newRoll);
 	
 	public boolean Contains(String name, String type);
 	
@@ -35,5 +34,7 @@ public interface PlayerManager_Interface
 	public int GetLeadDiff(int index);
 
 	public void Reset();
+
+	boolean AIContinue(int index, Player_Callback callback);
 	
 }

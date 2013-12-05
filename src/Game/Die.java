@@ -15,12 +15,10 @@ public class Die
 	public void Roll() 
 	{
 		value = 1 + random.nextInt(6);
-		//System.out.println("Rolled value: " + value);
 	}
 
 	public int GetValue() 
 	{
 		return value;
 	}
-
 }

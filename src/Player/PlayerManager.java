@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import javax.lang.model.element.NestingKind;
 
+import GUI.GUI_Callback;
+
 public class PlayerManager implements PlayerManager_Interface
 {
 
 	private final String[] playerTypes = {"Human", "Coward AI", "Gambler AI", "Clever AI", "Random AI"};
 	
-	ArrayList<PlayerInfo> playerList;
+	private ArrayList<PlayerInfo> playerList;
 	
 	public PlayerManager()
 	{
@@ -52,14 +54,14 @@ public class PlayerManager implements PlayerManager_Interface
 	}
 	
 	@Override
-	public boolean AIContinue(int index, int roundScore, int leadDif, float scorePercent, boolean newRoll) 
+	public boolean AIContinue(int index, Player_Callback callback) 
 	{
 		// TODO Auto-generated method stub
 		if (IsAI(index))
 		{
 			AI_Interface ai = GetAI(playerList.get(index).GetType());
 			if (ai != null)
-				return ai.Continue(roundScore, leadDif, scorePercent, newRoll);
+				return ai.Continue(callback);
 		}
 		return false;
 	}
@@ -183,7 +185,8 @@ public class PlayerManager implements PlayerManager_Interface
 	}
 
 	@Override
-	public int GetWinner(int scoreLimit) {
+	public int GetWinner(int scoreLimit) 
+	{
 		// TODO Auto-generated method stub
 		int bestIndex = GetBestScoreExcept(-1);
 		

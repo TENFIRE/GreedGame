@@ -23,6 +23,10 @@ public interface GameState_Interface
 	
 	public boolean CanSkipAI();
 	
+	public boolean CanSetScoreLimit();
+	
+	public boolean CanSetBustLimit();
+	
 	public void Roll(GreedGame game);
 
 }

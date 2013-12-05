@@ -68,4 +68,16 @@ public class PostGameState implements GameState_Interface
 		game.Roll();
 	}
 
+	@Override
+	public boolean CanSetScoreLimit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean CanSetBustLimit() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

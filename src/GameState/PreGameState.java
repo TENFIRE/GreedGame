@@ -65,6 +65,18 @@ public class PreGameState implements GameState_Interface
 		game.Roll();
 	}
 
+	@Override
+	public boolean CanSetScoreLimit() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean CanSetBustLimit() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 
 
 }

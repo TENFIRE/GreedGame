@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,9 +23,15 @@ public class PreGamePanel extends MyPanel
 	private JScrollPane scrollPane;
 	private JTable playerTable;
 	private JButton addButton, removeButton, startButton;
+	private JButton bustButton, scoreButton;
+	private JLabel bustLabel, scoreLabel;
 	
 	private JPanel playerPanel;
 	private JPanel buttonPanel;
+	
+	private JPanel limitPanel;
+	private JPanel limitButtonPanel;
+	private JPanel limitTextPanel;
 	
 	
 	String[] columnNames = { "Name", "Type" };
@@ -49,6 +56,33 @@ public class PreGamePanel extends MyPanel
 		startButton.setVisible(true);
 		startButton.addActionListener(this);
 		
+		limitPanel = new JPanel();
+		limitButtonPanel = new JPanel();
+		limitTextPanel = new JPanel();
+		limitPanel.setLayout(new BorderLayout());
+		limitButtonPanel.setLayout(new FlowLayout());
+		limitTextPanel.setLayout(new BorderLayout());
+		
+		bustButton = new JButton("Change bust limit");
+		bustButton.setVisible(true);
+		bustButton.addActionListener(this);
+		
+		scoreButton = new JButton("Change score limit");
+		scoreButton.setVisible(true);
+		scoreButton.addActionListener(this);
+		
+		bustLabel = new JLabel("Bust limit: ");
+		scoreLabel = new JLabel("Score limit: ");
+		
+		limitButtonPanel.add(bustButton);
+		limitButtonPanel.add(scoreButton);
+		
+		limitTextPanel.add(bustLabel, BorderLayout.NORTH);
+		limitTextPanel.add(scoreLabel, BorderLayout.SOUTH);
+		
+		limitPanel.add(limitTextPanel, BorderLayout.WEST);
+		limitPanel.add(limitButtonPanel, BorderLayout.EAST);
+		
 		model = new DefaultTableModel(0, columnNames.length);
 		model.setColumnIdentifiers(columnNames);
 		
@@ -71,6 +105,7 @@ public class PreGamePanel extends MyPanel
 	    
 	    setLayout(new BorderLayout());
 	    add(playerPanel, BorderLayout.NORTH);
+	    add(limitPanel, BorderLayout.CENTER);
 	    add(buttonPanel, BorderLayout.SOUTH);
 		
 	}
@@ -95,6 +130,9 @@ public class PreGamePanel extends MyPanel
 				model.addRow(new String[]{data[i][0], data[i][1]});
 			}
 		}
+		
+		scoreLabel.setText("Score limit: " + callback.GetScoreLimit());
+		bustLabel.setText("Bust limit: " + callback.GetBustLimit());
 	}
 	
 	private void AddPlayer()
@@ -102,7 +140,7 @@ public class PreGamePanel extends MyPanel
 		if (!CheckCallback())
 			return;
 		
-		String name = JOptionPane.showInputDialog("What's your name?");
+		String name = JOptionPane.showInputDialog(this, "What's your name?");
 		
 		if (name != null)
 		{
@@ -112,7 +150,7 @@ public class PreGamePanel extends MyPanel
 				
 				if (types.length > 0)
 				{
-					int choice = JOptionPane.showOptionDialog(null, "What are " + name + "?", "Playertype", JOptionPane.YES_NO_OPTION, 
+					int choice = JOptionPane.showOptionDialog(this, "What are " + name + "?", "Playertype", JOptionPane.YES_NO_OPTION, 
 							JOptionPane.INFORMATION_MESSAGE, null, types, types[0]);
 					
 					if (choice >= 0 && choice < types.length)
@@ -135,7 +173,7 @@ public class PreGamePanel extends MyPanel
 		{
 			String name = (String) model.getValueAt(index, 0);
 			
-			int choice = JOptionPane.showConfirmDialog(null, "Do you want to remove " + name + "?");
+			int choice = JOptionPane.showConfirmDialog(this, "Do you want to remove " + name + "?");
 			
 			if (choice == 0)
 			{
@@ -144,6 +182,36 @@ public class PreGamePanel extends MyPanel
 			}
 			
 		}
+	}
+	
+	private void SetScoreLimit()
+	{
+		if (!CheckCallback())
+			return;
+		
+		String input = JOptionPane.showInputDialog(this, "Enter new score limit");
+		
+		try 
+		{
+	        int limit = Integer.parseInt( input );
+	        callback.SetScoreLimit(limit);
+	    }
+	    catch( Exception e ) {}
+	}
+	
+	private void SetBustLimit()
+	{
+		if (!CheckCallback())
+			return;
+		
+		String input = JOptionPane.showInputDialog(this, "Enter new bust limit");
+		
+		try 
+		{
+	        int limit = Integer.parseInt( input );
+	        callback.SetBustLimit(limit);
+	    }
+	    catch( Exception e ) {}
 	}
 
 	@Override
@@ -163,7 +231,21 @@ public class PreGamePanel extends MyPanel
 		
 		else if (e.getSource() == startButton)
 		{
+			if (!CheckCallback())
+				return;
 			callback.StartGame();
+		}
+		
+		else if (e.getSource() == bustButton)
+		{
+			SetBustLimit();
+			UpdateData();
+		}
+		
+		else if (e.getSource() == scoreButton)
+		{
+			SetScoreLimit();
+			UpdateData();
 		}
 	}
 

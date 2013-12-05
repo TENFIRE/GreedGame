@@ -18,6 +18,15 @@ public interface GUI_Callback
 	public String GetPlayerType(int index);
 	public int GetPlayerScore(int index);
 	
+	public int GetScoreLimit();
+	public int GetBustLimit();
+	
+	public void SetScoreLimit(int limit);
+	public void SetBustLimit(int limit);
+	
+	public boolean CanSetScoreLimit();
+	public boolean CanSetBustLimit();
+	
 	public boolean AddPlayer(String name, String type);
 	public void RemovePlayer(String name, String type);
 	

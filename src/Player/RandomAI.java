@@ -10,12 +10,19 @@ public class RandomAI implements AI_Interface
 	{
 		random = new Random();
 	}
-	
+
+
 	@Override
-	public boolean Continue(int roundScore, int leadDif, float scorePercent, boolean newRoll) 
+	public boolean Continue(Player_Callback callback) 
 	{
 		// TODO Auto-generated method stub
-		value = (newRoll) ? random.nextInt(2) : value;
+		if (callback == null)
+			return false;
+		
+		if (callback.GetTotalScore() >= callback.GetScoreLimit())
+			return false;
+		
+		value = (callback.IsNewRoll()) ? random.nextInt(2) : value;
 
 		return value == 1;
 	}
