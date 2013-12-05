@@ -71,7 +71,7 @@ public class DiceManager implements DiceManager_Interface
 		
 		for (int i = 0; i < dice.length; i++)
 		{
-			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			if (!selectedDice.contains(i) && !lockedDice.contains(i))
 			{
 				int diceValue = dice[i].GetValue();
 				for (int j = 0; j < temp.length; j++)
@@ -94,7 +94,7 @@ public class DiceManager implements DiceManager_Interface
 		System.arraycopy(values, 0, temp, 0, values.length);
 		for (int i = 0; i < dice.length; i++)
 		{
-			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			if (!selectedDice.contains(i) && !lockedDice.contains(i))
 			{
 				int diceValue = dice[i].GetValue();
 				for (int j = 0; j < temp.length; j++)
@@ -174,7 +174,7 @@ public class DiceManager implements DiceManager_Interface
 		int k = 0;
 		for (int i = 0; i < dice.length; i++)
 		{
-			if (!selectedDice.contains(i) && !selectedDice.contains(i))
+			if (!selectedDice.contains(i) && !lockedDice.contains(i))
 			{
 				if (k < freeVal.length)
 				{

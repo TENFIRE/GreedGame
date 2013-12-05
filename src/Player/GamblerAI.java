@@ -1,12 +1,16 @@
 package Player;
 
+import java.util.Random;
+
 
 
 public class GamblerAI implements AI_Interface
 {
+	private static Random random;
+	private static int value;
 	public GamblerAI()
 	{
-		
+		random = new Random();
 	}
 
 	@Override
@@ -19,7 +23,8 @@ public class GamblerAI implements AI_Interface
 		if (callback.GetTotalScore() >= callback.GetScoreLimit())
 			return false;
 		
-		return true;
+		value = (callback.IsNewRoll()) ? random.nextInt(8) : value;
+		return value == 0;
 	}
 	
 }

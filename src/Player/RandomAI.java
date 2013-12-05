@@ -24,7 +24,7 @@ public class RandomAI implements AI_Interface
 		
 		value = (callback.IsNewRoll()) ? random.nextInt(2) : value;
 
-		return value == 1;
+		return value == 0;
 	}
 
 }

@@ -22,9 +22,10 @@ public class CleverAI implements AI_Interface
 		int leadDiff = callback.GetLeadDiff();
 		float scorePercent = callback.GetScorePercent();
 		
-		float roundScoreTerm = roundScore * -10; //-300 to - 9999
-		float leadDiffTerm = -leadDiff; //-9999 to 9999
-		float percentTerm = ((scorePercent - 0.6f) * 2000); //-1200 to 800
+		float roundScoreTerm = roundScore * -2.0f;
+		float leadDiffTerm = leadDiff * 1.0f;
+		leadDiffTerm = leadDiffTerm > 500 ? 500 : leadDiffTerm;
+		float percentTerm = ((scorePercent - 0.5f) * 1500);
 		
 		float continueFactor = percentTerm + leadDiffTerm + roundScoreTerm;
 		

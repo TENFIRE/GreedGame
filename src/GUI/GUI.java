@@ -28,6 +28,7 @@ public class GUI extends JFrame implements GUI_Interface
 		setSize(600, 550);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+		setLocationRelativeTo(null);
 
 		panel = new PreGamePanel();
 		

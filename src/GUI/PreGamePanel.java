@@ -71,17 +71,17 @@ public class PreGamePanel extends MyPanel
 		scoreButton.setVisible(true);
 		scoreButton.addActionListener(this);
 		
-		bustLabel = new JLabel("Bust limit: ");
-		scoreLabel = new JLabel("Score limit: ");
+		bustLabel = new JLabel("     Bust limit: ");
+		scoreLabel = new JLabel("     Score limit: ");
 		
 		limitButtonPanel.add(bustButton);
 		limitButtonPanel.add(scoreButton);
 		
 		limitTextPanel.add(bustLabel, BorderLayout.NORTH);
-		limitTextPanel.add(scoreLabel, BorderLayout.SOUTH);
+		limitTextPanel.add(scoreLabel, BorderLayout.CENTER);
 		
 		limitPanel.add(limitTextPanel, BorderLayout.WEST);
-		limitPanel.add(limitButtonPanel, BorderLayout.EAST);
+		limitPanel.add(limitButtonPanel, BorderLayout.CENTER);
 		
 		model = new DefaultTableModel(0, columnNames.length);
 		model.setColumnIdentifiers(columnNames);
@@ -131,8 +131,8 @@ public class PreGamePanel extends MyPanel
 			}
 		}
 		
-		scoreLabel.setText("Score limit: " + callback.GetScoreLimit());
-		bustLabel.setText("Bust limit: " + callback.GetBustLimit());
+		scoreLabel.setText("     Score limit: " + callback.GetScoreLimit());
+		bustLabel.setText("     Bust limit: " + callback.GetBustLimit());
 	}
 	
 	private void AddPlayer()

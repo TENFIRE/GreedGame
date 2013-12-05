@@ -125,6 +125,7 @@ public class GreedGame implements GUI_Callback, Player_Callback
 	{
 		newRoll = true;
 		dManager.LockAndRoll();
+		SelectBestScore();
 	}
 
 	private void NewRound()

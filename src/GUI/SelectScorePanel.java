@@ -19,6 +19,8 @@ public class SelectScorePanel extends MyPanel
 	protected JButton restartButton;
 	
 	private JPanel dicePanel;
+	
+	
 	protected JPanel buttonPanel;
 	private JPanel roundInfoPanel;
 	
@@ -64,11 +66,14 @@ public class SelectScorePanel extends MyPanel
 			
 			dicevalues[i] = new JLabel();
 			dicevalues[i].setVisible(true);
-
-			dicePanel.add(diceboxes[i]);
-			dicePanel.add(dicevalues[i]);
+			
+			JPanel pairPanel = new JPanel();
+			pairPanel.setLayout(new BorderLayout());
+			
+			pairPanel.add(diceboxes[i], BorderLayout.SOUTH);
+			pairPanel.add(dicevalues[i], BorderLayout.NORTH);
+			dicePanel.add(pairPanel);
 		}
-		
 		
 		activePlayerLable = new JLabel(playerString);
 		roundScoreLable = new JLabel(roundString);
@@ -180,7 +185,7 @@ public class SelectScorePanel extends MyPanel
 			diceboxes[i].setEnabled(!callback.IsDieLocked(i));	
 			diceboxes[i].setSelected(callback.IsDieSelected(i));
 			
-			dicevalues[i].setText(Integer.toString(dice[i]));
+			dicevalues[i].setText("  " + Integer.toString(dice[i]));
 		}
 		
 	}
