@@ -213,11 +213,11 @@ public class DiceManager implements DiceManager_Interface
 	}
 
 	@Override
-	public boolean IsAllLocked() 
+	public boolean IsAllLockedOrSelected() 
 	{
 		// TODO Auto-generated method stub
 		for (int i = 0; i < dice.length; i++)
-			if (!lockedDice.contains(i))
+			if (!lockedDice.contains(i) && !selectedDice.contains(i))
 				return false;
 		return true;
 	}

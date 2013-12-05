@@ -39,6 +39,7 @@ public class AIPanel extends SelectScorePanel
 
 		if (arg0.getSource() == skipAIButton)
 		{
+			callback.SkipAI();
 			System.out.println("Pressed Skip AI");
 		}
 		else

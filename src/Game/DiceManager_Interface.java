@@ -30,5 +30,5 @@ public interface DiceManager_Interface
 	
 	public void Reset();
 
-	public boolean IsAllLocked();
+	public boolean IsAllLockedOrSelected();
 }

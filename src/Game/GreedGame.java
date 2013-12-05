@@ -96,16 +96,30 @@ public class GreedGame implements GUI_Callback
 	public void Continue() 
 	{
 		// TODO Auto-generated method stub
-		if (gameState.CanContinue(this))
+		if (CanContinue())
 		{
 			sManager.AddScore(dManager.GetSelectedValues());
-			gameState.Roll(this);
 			
-			if (dManager.IsAllLocked())
+			if (dManager.IsAllLockedOrSelected())
 				dManager.Reset();
 			
+			gameState.Roll(this);
+
 			gui.UpdateData();
 		}
+	}
+	
+	public boolean AIContinue(int index)
+	{
+		// TODO Auto-generated method stub
+		int freeDice = 6 - (dManager.GetNumberOfLockedDice() + dManager.GetNumberOfSelectedDice());
+		int roundScore = GetRoundScore() + GetRollScore();
+		int leadDiff = pManager.GetLeadDiff(activePlayer);
+		float scorePercent = sManager.GetScorePercent(freeDice);
+		
+		boolean result = pManager.AIContinue(index, roundScore, leadDiff, scorePercent, newRoll);
+		newRoll = false;
+		return result;
 	}
 	
 	public void Roll()
@@ -322,16 +336,15 @@ public class GreedGame implements GUI_Callback
 	public void SkipAI() 
 	{
 		// TODO Auto-generated method stub
-		if (CanSkipAI())
+		
+		while (CanSkipAI() && pManager.IsAI(activePlayer))
 		{
-			while (pManager.IsAI(activePlayer))
-			{
-				if (gameState.CanContinue(this))
-					Continue();
-				else
-					Done();
-			}
+			if (CanContinue())
+				Continue();
+			else
+				Done();
 		}
+		
 	}
 
 	@Override
@@ -360,20 +373,6 @@ public class GreedGame implements GUI_Callback
 	{
 		// TODO Auto-generated method stub
 		return pManager.GetScore(index);
-	}
-
-	@Override
-	public boolean AIContinue(int index)
-	{
-		// TODO Auto-generated method stub
-		int freeDice = 6 - (dManager.GetNumberOfLockedDice() + dManager.GetNumberOfSelectedDice());
-		int roundScore = GetRoundScore() + GetRollScore();
-		int leadDiff = pManager.GetLeadDiff(activePlayer);
-		float scorePercent = sManager.GetScorePercent(freeDice);
-		
-		boolean result = pManager.AIContinue(index, roundScore, leadDiff, scorePercent, newRoll);
-		newRoll = false;
-		return result;
 	}
 
 	@Override

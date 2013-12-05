@@ -29,6 +29,10 @@ public class PlayerManager implements PlayerManager_Interface
 			return new CowardAI();
 		case "Gambler AI":
 			return new GamblerAI();
+		case "Clever AI":
+			return new CleverAI();
+		case "Random AI":
+			return new RandomAI();
 		default:
 			break;
 		}

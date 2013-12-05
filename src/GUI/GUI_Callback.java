@@ -6,7 +6,6 @@ public interface GUI_Callback
 	public void Done();
 	public void Restart();
 	public void SkipAI();
-	public boolean AIContinue(int index);
 	
 	public void StartGame();
 	
