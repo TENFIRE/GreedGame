@@ -1,8 +1,6 @@
 package GameState;
 
-import GUI.GUI_Interface;
 import Game.GreedGame;
-import Player.PlayerManager_Interface;
 
 
 public interface GameState_Interface

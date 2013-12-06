@@ -2,7 +2,6 @@ package GameState;
 
 import GUI.GUI_Interface.GUIState;
 import Game.GreedGame;
-import Player.PlayerManager_Interface;
 
 public class PostGameState implements GameState_Interface
 {

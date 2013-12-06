@@ -1,9 +1,7 @@
 package GameState;
 
-import GUI.GUI_Interface;
 import GUI.GUI_Interface.GUIState;
 import Game.GreedGame;
-import Player.PlayerManager_Interface;
 
 public class SelectScoreState implements GameState_Interface
 {

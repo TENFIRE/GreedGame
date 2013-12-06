@@ -2,10 +2,6 @@ package Player;
 
 import java.util.ArrayList;
 
-import javax.lang.model.element.NestingKind;
-
-import GUI.GUI_Callback;
-
 public class PlayerManager implements PlayerManager_Interface
 {
 

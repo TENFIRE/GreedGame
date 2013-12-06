@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 public class SelectScorePanel extends MyPanel
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton doneButton;
 	private JButton continueButton;
 	private JButton restartButton;

@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 public abstract class MyPanel extends JPanel implements ActionListener
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected GUI_Callback callback;
 	
 	public abstract void UpdateData();

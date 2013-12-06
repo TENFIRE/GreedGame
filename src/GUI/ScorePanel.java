@@ -1,12 +1,8 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -14,11 +10,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class ScorePanel extends MyPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JScrollPane scrollPane;
 	private JTable playerTable;
-	private JButton addButton, removeButton, startButton;
 
-	
 	private String[] columnNames = { "Name", "Type", "Score" };
 	private DefaultTableModel model;
 	
@@ -29,6 +27,11 @@ public class ScorePanel extends MyPanel
 		
 		playerTable = new JTable(model)
 		{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) { return false; }
 		};
 		

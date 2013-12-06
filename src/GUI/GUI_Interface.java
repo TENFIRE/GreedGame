@@ -1,7 +1,5 @@
 package GUI;
 
-import java.util.ArrayList;
-
 public interface GUI_Interface 
 {
 	public enum GUIState

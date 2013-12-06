@@ -1,12 +1,13 @@
 package GUI;
 import javax.swing.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 public class GUI extends JFrame implements GUI_Interface 
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private MyPanel panel;
 	
 	private GUI_Callback callback;
