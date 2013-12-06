@@ -2,6 +2,7 @@ package Game;
 
 import java.util.ArrayList;
 
+//This class is used to store an array with an int.
 class ValuesAndScore
 {
 	public int[] values;
@@ -17,6 +18,7 @@ public class ScoreManager implements ScoreManager_Interface
 		score = 0;
 	}
 	
+	//This returns the score aswell as the remaining values.
 	private ValuesAndScore GetTripple(int[] values)
 	{
 		ValuesAndScore result = new ValuesAndScore();
@@ -28,11 +30,13 @@ public class ScoreManager implements ScoreManager_Interface
 		for (int i = 0; i < 6; i++)
 			count[i] = 0;
 		
+		//Counts how many of every kind we have.
 		for (int i = 0; i < values.length; i++)
 		{
 			count[values[i] - 1]++;
 		}
 		
+		//For each tripple add score.
 		for (int i = 0; i < 6; i++)
 		{
 			if (count[i] >= 3)
@@ -44,17 +48,20 @@ public class ScoreManager implements ScoreManager_Interface
 			}
 		}
 		
+		//Remove the used values
 		result.values = RemoveTrippleValues(values);
 		
 		return result;
 	}
 	
+	//This returns the score aswell as the remaining values.
 	private ValuesAndScore GetSingles(int[] values)
 	{
 		ValuesAndScore result = new ValuesAndScore();
 		result.score = 0;
 		result.values = values;
 		
+		//Add 100 for each 1 and 50 for each 5
 		for (int i = 0; i < values.length; i++)
 		{
 			switch (values[i]) 
@@ -70,11 +77,13 @@ public class ScoreManager implements ScoreManager_Interface
 			}
 		}
 		
+		//Remove the used values
 		result.values = RemoveSinglesValues(values);
 		
 		return result;
 	}
 	
+	//This returns the score aswell as the remaining values.
 	private ValuesAndScore GetStreet(int[] values)
 	{
 		ValuesAndScore result = new ValuesAndScore();
@@ -87,16 +96,19 @@ public class ScoreManager implements ScoreManager_Interface
 		for (int i = 0; i < 6; i++)
 			count[i] = 0;
 		
+		//Counts how many of every kind we have.
 		for (int i = 0; i < values.length; i++)
 		{
 			count[values[i]-1]++;
 		}
 		
+		//If we don't have at least 1 of each kind we don't have a street.
 		for (int i = 0; i < 6; i++)
 		{
 			if (count[i] < 1)
 				return result;
 		}
+		//Remove the used values and set the score to 1000
 		result.values = RemoveStreetValues(values);
 		result.score = 1000;
 		return result;
@@ -158,10 +170,12 @@ public class ScoreManager implements ScoreManager_Interface
 		return 0;
 	}
 	
+	//Removes the values being used to score singles.
 	private int[] RemoveSinglesValues(int[] values)
 	{
 		int[] result;
 		
+		//Add non 1s and 5s to new list.
 		ArrayList<Integer> dice = new ArrayList<Integer>();
 		for (int i = 0; i < values.length; i++)
 		{
@@ -169,6 +183,7 @@ public class ScoreManager implements ScoreManager_Interface
 				dice.add(values[i]);
 		}
 		
+		//Move elements into new array.
 		result = new int[dice.size()];
 		
 		for (int i = 0; i < result.length; i++)
@@ -177,6 +192,7 @@ public class ScoreManager implements ScoreManager_Interface
 		return result;
 	}
 	
+	//Removes the values being used to score a street
 	private int[] RemoveStreetValues(int[] values)
 	{
 		int[] count = new int[6];
@@ -184,11 +200,13 @@ public class ScoreManager implements ScoreManager_Interface
 		for (int i = 0; i < 6; i++)
 			count[i] = 0;
 		
+		//Count how many of each kind we have.
 		for (int i = 0; i < values.length; i++)
 		{
 			count[values[i]-1]++;
 		}
 		
+		//If we dont have at least one of each kind we dont have a street.
 		for (int i = 0; i < 6; i++)
 		{
 			if (count[i] < 1)
@@ -197,6 +215,8 @@ public class ScoreManager implements ScoreManager_Interface
 		
 		int[] newValues = new int[values.length - 6];
 		
+		//Add the values that are not being used in the new array.
+		//This will always be an empty array when we only have 6 dice.
 		int k = 0;
 		for (int i = 0; i < 6; i++)
 		{
@@ -212,6 +232,7 @@ public class ScoreManager implements ScoreManager_Interface
 		return newValues;
 	}
 	
+	//Removes the values being used to score tripples.
 	private int[] RemoveTrippleValues(int[] values)
 	{
 		int[] count = new int[6];
@@ -219,11 +240,14 @@ public class ScoreManager implements ScoreManager_Interface
 		for (int i = 0; i < 6; i++)
 			count[i] = 0;
 		
+		//Count how many of each kind we have.
 		for (int i = 0; i < values.length; i++)
 		{
 			count[values[i] - 1]++;
 		}
 		
+		//Calculate how many of each kind will be left over (count[i] % 3)
+		//and add them together.
 		int temp = 0;
 		for (int i = 0; i < count.length; i++)
 		{
@@ -232,6 +256,8 @@ public class ScoreManager implements ScoreManager_Interface
 		
 		int[] newValues = new int[temp];
 		
+		//Calculate how many of each kind will be left over (count[i] % 3)
+		//and add that many to the new array.
 		int k = 0;
 		for (int i = 0; i < count.length; i++)
 		{
@@ -246,6 +272,11 @@ public class ScoreManager implements ScoreManager_Interface
 	@Override
 	public int[] SelectBestScore(int[] values)
 	{
+		//This method is creating a copy of the original array. It then removes
+		//the valus that are being used to score from the copy. Then it removes
+		//the values in the copy (non-scoring values) from the original one.
+		
+		
 		int[] temp = new int[values.length];
 		System.arraycopy(values, 0, temp, 0, values.length);
 		
