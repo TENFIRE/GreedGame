@@ -23,8 +23,8 @@ public class GamblerAI implements AI_Interface
 		if (callback.GetTotalScore() >= callback.GetScoreLimit())
 			return false;
 		
-		value = (callback.IsNewRoll()) ? random.nextInt(8) : value;
-		return value == 0;
+		value = (callback.IsNewRoll()) ? random.nextInt(5) : value;
+		return value != 0;
 	}
 	
 }
