@@ -209,6 +209,12 @@ public class DiceManager implements DiceManager_Interface
 		return selectedDice.size();
 	}
 
+	@Override
+	public int GetNumberOfDice() {
+		// TODO Auto-generated method stub
+		return NUMDICE;
+	}
+
 
 
 }

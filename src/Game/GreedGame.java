@@ -218,9 +218,9 @@ public class GreedGame implements GUI_Callback, Player_Callback
 	{
 		// TODO Auto-generated method stub
 		
-		int diceValues[] = new int[DiceManager.NUMDICE];
+		int diceValues[] = new int[dManager.GetNumberOfDice()];
 		
-		for (int i = 0; i < DiceManager.NUMDICE; i++)
+		for (int i = 0; i < diceValues.length; i++)
 		{
 			diceValues[i] = dManager.GetValue(i);
 		}

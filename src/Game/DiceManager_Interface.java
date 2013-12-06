@@ -31,4 +31,6 @@ public interface DiceManager_Interface
 	public void Reset();
 
 	public boolean IsAllLockedOrSelected();
+	
+	public int GetNumberOfDice();
 }
