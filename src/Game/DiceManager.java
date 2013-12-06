@@ -7,11 +7,11 @@ import java.util.Queue;
 
 public class DiceManager implements DiceManager_Interface
 {
-	public static final int NUMDICE = 6;
+	private static final int NUMDICE = 6;
 	
-	Die[] dice;
-	ArrayList<Integer> lockedDice;
-	ArrayList<Integer> selectedDice;
+	private Die[] dice;
+	private ArrayList<Integer> lockedDice;
+	private ArrayList<Integer> selectedDice;
 	
 	public DiceManager()
 	{

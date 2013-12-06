@@ -19,8 +19,8 @@ public class ScorePanel extends MyPanel
 	private JButton addButton, removeButton, startButton;
 
 	
-	String[] columnNames = { "Name", "Type", "Score" };
-	DefaultTableModel model;
+	private String[] columnNames = { "Name", "Type", "Score" };
+	private DefaultTableModel model;
 	
 	public ScorePanel()
 	{

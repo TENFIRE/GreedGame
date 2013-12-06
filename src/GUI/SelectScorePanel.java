@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 public class SelectScorePanel extends MyPanel
 {
 
-	protected JButton doneButton;
-	protected JButton continueButton;
-	protected JButton restartButton;
+	private JButton doneButton;
+	private JButton continueButton;
+	private JButton restartButton;
 	
 	private JPanel dicePanel;
 	
@@ -27,7 +27,7 @@ public class SelectScorePanel extends MyPanel
 	private ScorePanel scorePanel;
 	
 	protected JCheckBox diceboxes[];
-	protected JLabel dicevalues[];
+	private JLabel dicevalues[];
 	
 	private JLabel activePlayerLable, roundScoreLable, rollScoreLable;
 	

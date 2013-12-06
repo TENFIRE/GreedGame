@@ -4,7 +4,7 @@ import java.util.Random;
 public class Die 
 {
 	private int value;
-	static private Random random;
+	private static Random random;
 
 	public Die() 
 	{

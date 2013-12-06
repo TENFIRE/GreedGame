@@ -214,8 +214,6 @@ public class ScoreManager implements ScoreManager_Interface
 	
 	private int[] RemoveTrippleValues(int[] values)
 	{
-		ArrayList<Integer> restIndex = new ArrayList<Integer>();
-		
 		int[] count = new int[6];
 		
 		for (int i = 0; i < 6; i++)

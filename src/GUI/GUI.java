@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame implements GUI_Interface 
 {
-	MyPanel panel;
+	private MyPanel panel;
 	
-	GUI_Callback callback;
+	private GUI_Callback callback;
 
 	private GUIState guiState;
 	
